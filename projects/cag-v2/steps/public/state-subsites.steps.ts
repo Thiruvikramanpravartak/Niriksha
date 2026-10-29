@@ -76,3 +76,28 @@ Then('the selected view toggle mode should be active', async function (this: Cus
     await expect(statesPage.titleLocator()).toBeVisible();
   }
 });
+
+When('I navigate to an invalid state subsite slug {string}', async function (this: CustomWorld, slugPath: string) {
+  const page = this.getPage();
+  await page.goto(slugPath, { waitUntil: 'domcontentloaded', timeout: 35000 });
+  this.checklist.record('Invalid state slug navigation', slugPath, true);
+});
+
+Then('the application should handle the route gracefully without raw crash', async function (this: CustomWorld) {
+  const page = this.getPage();
+  // Assertion 1: Page has content
+  const body = page.locator('body');
+  await expect(body).toBeVisible();
+  this.checklist.record('Body content rendered', 'No blank screen', true);
+
+  // Assertion 2: No unhandled React / Next.js exception stack trace on screen
+  const errorOverlay = page.locator('#nextjs__container_errors, [data-nextjs-dialog-overlay]');
+  await expect(errorOverlay).not.toBeVisible();
+  this.checklist.record('No Next.js error dialog', 'Clean graceful degradation', true);
+
+  // Assertion 3: Header or navigation remains intact
+  const header = page.locator('header, nav, [class*="header"]').first();
+  await expect(header).toBeVisible({ timeout: 10000 });
+  this.checklist.record('Portal header visible on fallback', 'Layout preserved', true);
+});
+

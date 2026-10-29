@@ -157,8 +157,8 @@
     </div>
     <div class="stat-card">
       <div class="title">Automated, Awaiting Dev</div>
-      <div class="value val-purple">40</div>
-      <div class="desc">Written + @pending + Excluded from CI (17 candidates)</div>
+      <div class="value val-purple">47</div>
+      <div class="desc">Written + @pending + Excluded from CI (24 candidates)</div>
     </div>
     <div class="stat-card">
       <div class="title">Backlog (True QA Queue)</div>
@@ -172,8 +172,8 @@
     </div>
     <div class="stat-card">
       <div class="title">Coverage vs All Cand.</div>
-      <div class="value val-primary">53%</div>
-      <div class="desc">58 of 109 candidates (Active: 38%)</div>
+      <div class="value val-primary">60%</div>
+      <div class="desc">65 of 109 candidates (Active: 38%)</div>
     </div>
     <div class="stat-card">
       <div class="title">Open Defects</div>
@@ -190,7 +190,7 @@
   <div class="tabs">
     <button class="tab-btn active" onclick="openTab(event, 'tab-summary')">Summary Derivations</button>
     <button class="tab-btn" onclick="openTab(event, 'tab-active')">Automated & Active (49)</button>
-    <button class="tab-btn" onclick="openTab(event, 'tab-awaiting')">Automated, Awaiting Dev (40)</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-awaiting')">Automated, Awaiting Dev (47)</button>
     <button class="tab-btn" onclick="openTab(event, 'tab-backlog')">Backlog (0)</button>
     <button class="tab-btn" onclick="openTab(event, 'tab-all')">All Test Cases (253)</button>
     <button class="tab-btn" onclick="openTab(event, 'tab-defects')">Defects (15)</button>
@@ -740,6 +740,46 @@
       </thead>
       <tbody>
         <tr>
+              <td><strong>CT-10</strong></td>
+              <td>Contact</td>
+              <td>Verify the public Contact Us form validates required fields and email format</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/contact.feature</code></td>
+              <td><code>@ui @regression @module:contact @sheet:CT @area:public @TC:CT-10 @smoke @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>GR-02</strong></td>
+              <td>Global Relations</td>
+              <td>Verify a new Global Relations entry (e.g., an international engagement, MOU or delegation record) can be created</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/global-relations.feature</code></td>
+              <td><code>@TC:GR-02 @regression @priority:medium @type:ui</code></td>
+            </tr><tr>
+              <td><strong>GR-06</strong></td>
+              <td>Global Relations</td>
+              <td>Verify searching the Global Relations list returns matching entries</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/global-relations.feature</code></td>
+              <td><code>@ui @regression @module:global-relations @sheet:GR @area:admin @TC:GR-06 @smoke @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>GR-07</strong></td>
+              <td>Global Relations</td>
+              <td>Verify the Sort By and Rows-per-page controls behave correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/global-relations.feature</code></td>
+              <td><code>@TC:GR-07 @regression @priority:medium @type:functional</code></td>
+            </tr><tr>
+              <td><strong>CE-01</strong></td>
+              <td>Careers & Engagement</td>
+              <td>Verify Careers & Engagement page displays all recruitment pathways</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/global-relations.feature</code></td>
+              <td><code>@TC:CE-01 @smoke @priority:high @type:functional</code></td>
+            </tr><tr>
               <td><strong>NM-01</strong></td>
               <td>News & Media</td>
               <td>Verify the News & Media admin list screen matches the Figma list/CRUD pattern</td>
@@ -835,6 +875,14 @@
               <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
               <td><code>features/public/state-subsites.feature</code></td>
               <td><code>@TC:SS-10 @regression @priority:high @type:ui</code></td>
+            </tr><tr>
+              <td><strong>SS-12</strong></td>
+              <td>State Subsites</td>
+              <td>Verify navigating to a non-existent state slug is handled gracefully</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/state-subsites.feature</code></td>
+              <td><code>@TC:SS-12 @regression @priority:medium @type:functional</code></td>
             </tr><tr>
               <td><strong>UX-01</strong></td>
               <td>UI-UX & Shared Components</td>
@@ -939,6 +987,14 @@
               <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
               <td><code>features/public/bilingual.feature</code></td>
               <td><code>@TC:BL-05 @regression @priority:high @type:localization</code></td>
+            </tr><tr>
+              <td><strong>AD-13</strong></td>
+              <td>Admin - Dashboard</td>
+              <td>Verify only authenticated admins can view the dashboard</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/dashboard.feature</code></td>
+              <td><code>@ui @regression @module:admin-dashboard @sheet:AD @area:admin @TC:AD-13 @smoke @priority:high @type:security</code></td>
             </tr><tr>
               <td><strong>AC-01</strong></td>
               <td>Admin - CRUD Modules</td>
@@ -1571,7 +1627,7 @@
               <td>Verify the public Contact Us form validates required fields and email format</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>CT-11</strong></td>
               <td>CT - Contact</td>
@@ -1595,7 +1651,7 @@
               <td>Verify a new Global Relations entry (e.g., an international engagement, MOU or delegation record) can be created</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>GR-03</strong></td>
               <td>GR - Global Relations</td>
@@ -1627,7 +1683,7 @@
               <td>Verify searching the Global Relations list returns matching entries</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>GR-07</strong></td>
               <td>GR - Global Relations</td>
@@ -1635,7 +1691,7 @@
               <td>Verify the Sort By and Rows-per-page controls behave correctly</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>GR-08</strong></td>
               <td>GR - Global Relations</td>
@@ -1667,7 +1723,7 @@
               <td>Verify Careers & Engagement page displays all recruitment pathways</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>CE-02</strong></td>
               <td>CE - Careers & Engagement</td>
@@ -2019,7 +2075,7 @@
               <td>Verify navigating to a non-existent state slug is handled gracefully</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>UX-01</strong></td>
               <td>UX - UI-UX & Shared Components</td>
@@ -2395,7 +2451,7 @@
               <td>Verify only authenticated admins can view the dashboard</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>AC-01</strong></td>
               <td>AC - Admin - CRUD Modules</td>

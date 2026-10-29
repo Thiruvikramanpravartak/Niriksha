@@ -4,13 +4,15 @@
   "private": true,
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "cucumber-js --config cucumber.cjs",
-    "test:e2e": "cucumber-js --config cucumber.cjs",
-    "test:smoke": "cucumber-js --tags \"@smoke and not @pending\" --config cucumber.cjs",
-    "test:regression": "cucumber-js --tags \"@regression and not @pending\" --config cucumber.cjs",
+    "test": "tsx scripts/testRunner.ts",
+    "test:e2e": "cross-env ENV=e2e tsx scripts/testRunner.ts",
+    "test:uat": "cross-env ENV=uat tsx scripts/testRunner.ts",
+    "test:smoke": "tsx scripts/testRunner.ts --tags \"@smoke and not @pending\"",
+    "test:regression": "tsx scripts/testRunner.ts --tags \"@regression and not @pending\"",
     "validate:features": "tsx scripts/validateFeatures.ts",
     "traceability": "tsx scripts/traceability.ts",
-    "check:e2e": "tsx scripts/checkE2eReadiness.ts"
+    "check:e2e": "tsx scripts/checkE2eReadiness.ts",
+    "check:uat": "tsx scripts/checkUatReadiness.ts"
   },
   "dependencies": {
     "@qa/core": "*"

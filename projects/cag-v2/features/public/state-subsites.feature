@@ -50,3 +50,11 @@ Feature: State Offices & Subsites Directory — Regional PAG Presence
       Then regional audit reports and accounts links should be present on each state card
       And the state directory page title should be visible
       And the page records no console errors
+
+  Rule: State subsite error handling and fallback
+
+    @TC:SS-12 @regression @priority:medium @type:functional
+    Scenario: [SS-12] Navigating to an invalid state slug handles the route gracefully without application crash
+      When I navigate to an invalid state subsite slug "/states/invalid-slug-xyz"
+      Then the application should handle the route gracefully without raw crash
+      And the page records no console errors

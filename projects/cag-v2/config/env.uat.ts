@@ -2,10 +2,10 @@ import { EnvConfig } from '@qa/core';
 
 export const envUat: EnvConfig = {
   name: 'uat',
-  baseUrl: process.env.CAG_UAT_BASE_URL || 'http://13.202.245.81:3001',
-  adminUrl: process.env.CAG_UAT_ADMIN_URL || 'http://13.202.245.81:3001/admin',
-  apiBaseUrl: process.env.CAG_UAT_API_BASE_URL || 'http://13.202.245.81:3001',
-  apiVersionPrefixes: ['/api', '/api/v1'],
+  baseUrl: process.env.CAG_UAT_BASE_URL || 'http://15.252.122.216',
+  adminUrl: process.env.CAG_UAT_ADMIN_URL || 'http://15.252.122.216/admin',
+  apiBaseUrl: process.env.CAG_UAT_API_BASE_URL || 'http://15.252.122.216',
+  apiVersionPrefixes: ['/api/v1', '/api'],
   timeouts: {
     action: 10000,
     navigation: 30000,

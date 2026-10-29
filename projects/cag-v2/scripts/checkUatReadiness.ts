@@ -22,15 +22,16 @@ async function probeHttp(target: string, rawUrl: string, timeoutMs: number = 300
           hostname: parsed.hostname,
           port: parsed.port || (parsed.protocol === 'https:' ? 443 : 80),
           path: parsed.pathname || '/',
-          method: 'HEAD',
+          method: 'GET',
           timeout: timeoutMs,
         },
         (res) => {
+          res.resume(); // consume response data to free socket
           const latency = Date.now() - start;
           resolve({
             target,
             url: rawUrl,
-            reachable: true,
+            reachable: res.statusCode !== undefined && res.statusCode < 500,
             statusCode: res.statusCode,
             latencyMs: latency,
             message: `HTTP ${res.statusCode} (${latency}ms)`,
@@ -83,7 +84,7 @@ async function main() {
   const targets = [
     { name: 'Public Landing', url: envUat.baseUrl },
     { name: 'Admin Portal', url: envUat.adminUrl },
-    { name: 'API Health Probe', url: `${envUat.apiBaseUrl}/api/health` },
+    { name: 'API Health Probe', url: `${envUat.apiBaseUrl}/api/v1/home` },
   ];
 
   console.log('Probing HTTP endpoints (non-blocking)...');
