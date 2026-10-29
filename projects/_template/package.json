@@ -1,0 +1,20 @@
+{
+  "name": "@projects/_template",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test:all": "playwright test tests/api",
+    "test:api": "playwright test tests/api",
+    "test:smoke": "cucumber-js --tags \"@smoke and not @pending\"",
+    "test:regression": "cucumber-js --tags \"@regression and not @pending\""
+  },
+  "dependencies": {
+    "@qa/core": "*"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.2",
+    "@types/node": "^20.17.0",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,77 @@
+pipeline {
+  agent {
+    label 'qa-playwright'
+  }
+
+  parameters {
+    choice(name: 'ENV', choices: ['uat', 'e2e'], description: 'Target environment')
+    choice(name: 'SUITE', choices: ['api', 'smoke', 'regression', 'visual', 'a11y', 'crawl', 'all'], description: 'Suite to run')
+    choice(name: 'BROWSER', choices: ['chromium', 'firefox', 'webkit'], description: 'Browser engine')
+  }
+
+  environment {
+    CI = 'true'
+    NODE_VERSION = '20'
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
+
+    stage('Install') {
+      steps {
+        sh 'npm ci'
+      }
+    }
+
+    stage('Lint & Typecheck') {
+      steps {
+        sh 'npm run lint'
+        sh 'npm run typecheck'
+      }
+    }
+
+    stage('Smoke Suite (Mock)') {
+      steps {
+        sh 'MOCK=1 npm run test:smoke'
+      }
+    }
+
+    stage('Traceability Dashboard') {
+      steps {
+        sh 'npm run traceability'
+      }
+    }
+
+    stage('Live Smoke Stage (Report-Only Gate)') {
+      when {
+        expression { return params.ENV != null && params.SUITE != null }
+      }
+      steps {
+        // Report-only gate (§D7): failures mark build UNSTABLE, not FAILURE
+        catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+          sh "ENV=${params.ENV} BROWSER=${params.BROWSER} npm run test:${params.SUITE}"
+        }
+      }
+    }
+  }
+
+  post {
+    always {
+      archiveArtifacts artifacts: 'test-results/**,allure-results/**,projects/cag-v2/traceability/**', allowEmptyArchive: true
+      allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+    }
+    success {
+      echo "[NOTIFY] QA Automation Pipeline completed successfully. Traceability dashboard generated."
+    }
+    unstable {
+      echo "[NOTIFY] Build UNSTABLE: Test failures detected in report-only gate. Please inspect Allure report."
+    }
+    failure {
+      echo "[NOTIFY] Build FAILED: Pipeline failed at compilation, linting, or mock suite execution."
+    }
+  }
+}

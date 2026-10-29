@@ -1,0 +1,56 @@
+{
+  "name": "qa-automation",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/core",
+    "projects/cag-v2"
+  ],
+  "scripts": {
+    "lint": "eslint . --ext .ts,.js,.cjs",
+    "lint:fix": "eslint . --ext .ts,.js,.cjs --fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "typecheck": "tsc --noEmit --project packages/core/tsconfig.json && tsc --noEmit --project projects/cag-v2/tsconfig.json",
+    "test": "npm run test:e2e --workspace=@projects/cag-v2",
+    "test:core": "npm run test --workspace=@qa/core",
+    "test:e2e": "npm run test:e2e --workspace=@projects/cag-v2",
+    "test:smoke": "npm run test:smoke --workspace=@projects/cag-v2",
+    "test:regression": "npm run test:regression --workspace=@projects/cag-v2",
+    "report": "playwright show-report projects/cag-v2/playwright-report",
+    "traceability": "tsx projects/cag-v2/scripts/traceability.ts",
+    "check:e2e": "tsx projects/cag-v2/scripts/checkE2eReadiness.ts",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
+    "@cucumber/cucumber": "^10.9.0",
+    "@faker-js/faker": "^9.0.3",
+    "@playwright/test": "^1.48.2",
+    "@types/node": "^20.17.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "allure-cucumberjs": "^3.0.6",
+    "allure-playwright": "^3.0.6",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "exceljs": "^4.4.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "playwright": "^1.48.2",
+    "prettier": "^3.3.3",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "zod": "^3.23.8"
+  },
+  "lint-staged": {
+    "*.{ts,js,cjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

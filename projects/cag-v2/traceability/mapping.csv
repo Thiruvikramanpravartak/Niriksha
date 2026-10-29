@@ -1,0 +1,91 @@
+TestCaseId,Module,Suite,SpecFile,Tags,AutomationCandidate,ModuleStatus
+AC-01,"Admin - CRUD Modules",admin-bdd,"features/admin/crud.feature","@ui @regression @smoke @TC:AC-01 @TC:AC-08 @TC:AC-02 @TC:AC-03 @TC:AC-04",Y,pending
+AC-08,"Admin - CRUD Modules",admin-bdd,"features/admin/crud.feature","@ui @regression @smoke @TC:AC-01 @TC:AC-08 @TC:AC-02 @TC:AC-03 @TC:AC-04",N,pending
+AC-02,"Admin - CRUD Modules",admin-bdd,"features/admin/crud.feature","@ui @regression @smoke @TC:AC-01 @TC:AC-08 @TC:AC-02 @TC:AC-03 @TC:AC-04",Y,pending
+AC-03,"Admin - CRUD Modules",admin-bdd,"features/admin/crud.feature","@ui @regression @smoke @TC:AC-01 @TC:AC-08 @TC:AC-02 @TC:AC-03 @TC:AC-04",Y,pending
+AC-04,"Admin - CRUD Modules",admin-bdd,"features/admin/crud.feature","@ui @regression @smoke @TC:AC-01 @TC:AC-08 @TC:AC-02 @TC:AC-03 @TC:AC-04",Y,pending
+AC-05,"Admin - CRUD Modules",admin-bdd,"features/admin/crud.feature","@ui @regression @smoke @TC:AC-01 @TC:AC-08 @TC:AC-02 @TC:AC-03 @TC:AC-04",Y,pending
+AC-06,"Admin - CRUD Modules",admin-bdd,"features/admin/crud.feature","@ui @regression @smoke @TC:AC-01 @TC:AC-08 @TC:AC-02 @TC:AC-03 @TC:AC-04",N,pending
+AC-07,"Admin - CRUD Modules",admin-bdd,"features/admin/crud.feature","@ui @regression @smoke @TC:AC-01 @TC:AC-08 @TC:AC-02 @TC:AC-03 @TC:AC-04",Y,pending
+AC-09,"Admin - CRUD Modules",admin-bdd,"features/admin/crud.feature","@ui @regression @smoke @TC:AC-01 @TC:AC-08 @TC:AC-02 @TC:AC-03 @TC:AC-04",N,pending
+AC-10,"Admin - CRUD Modules",admin-bdd,"features/admin/crud.feature","@ui @regression @smoke @TC:AC-01 @TC:AC-08 @TC:AC-02 @TC:AC-03 @TC:AC-04",N,pending
+AC-11,"Admin - CRUD Modules",admin-bdd,"features/admin/crud.feature","@ui @regression @smoke @TC:AC-01 @TC:AC-08 @TC:AC-02 @TC:AC-03 @TC:AC-04",N,pending
+AC-12,"Admin - CRUD Modules",admin-bdd,"features/admin/crud.feature","@ui @regression @smoke @TC:AC-01 @TC:AC-08 @TC:AC-02 @TC:AC-03 @TC:AC-04",N,pending
+AC-13,"Admin - CRUD Modules",admin-bdd,"features/admin/crud.feature","@ui @regression @smoke @TC:AC-01 @TC:AC-08 @TC:AC-02 @TC:AC-03 @TC:AC-04",N,pending
+AC-14,"Admin - CRUD Modules",admin-bdd,"features/admin/crud.feature","@ui @regression @smoke @TC:AC-01 @TC:AC-08 @TC:AC-02 @TC:AC-03 @TC:AC-04",N,pending
+AC-15,"Admin - CRUD Modules",admin-bdd,"features/admin/crud.feature","@ui @regression @smoke @TC:AC-01 @TC:AC-08 @TC:AC-02 @TC:AC-03 @TC:AC-04",Y,pending
+AA-01,"Admin - Authentication",admin-bdd,"features/admin/login.feature","@ui @regression @smoke @TC:AA-01 @TC:AA-02 @TC:AA-03 @TC:AA-04",Y,shipped
+AA-02,"Admin - Authentication",admin-bdd,"features/admin/login.feature","@ui @regression @smoke @TC:AA-01 @TC:AA-02 @TC:AA-03 @TC:AA-04",Y,shipped
+AA-03,"Admin - Authentication",admin-bdd,"features/admin/login.feature","@ui @regression @smoke @TC:AA-01 @TC:AA-02 @TC:AA-03 @TC:AA-04",N,shipped
+AA-04,"Admin - Authentication",admin-bdd,"features/admin/login.feature","@ui @regression @smoke @TC:AA-01 @TC:AA-02 @TC:AA-03 @TC:AA-04",N,shipped
+AA-05,"Admin - Authentication",admin-bdd,"features/admin/login.feature","@ui @regression @smoke @TC:AA-01 @TC:AA-02 @TC:AA-03 @TC:AA-04",N,shipped
+AA-06,"Admin - Authentication",admin-bdd,"features/admin/login.feature","@ui @regression @smoke @TC:AA-01 @TC:AA-02 @TC:AA-03 @TC:AA-04",Y,shipped
+AA-07,"Admin - Authentication",admin-bdd,"features/admin/login.feature","@ui @regression @smoke @TC:AA-01 @TC:AA-02 @TC:AA-03 @TC:AA-04",Y,shipped
+HP-01,"Home Page",public-bdd,"features/public/home.feature","@ui @regression @smoke @TC:HP-01 @TC:HP-09 @TC:HP-02 @TC:HP-03",Y,shipped
+HP-09,"Home Page",public-bdd,"features/public/home.feature","@ui @regression @smoke @TC:HP-01 @TC:HP-09 @TC:HP-02 @TC:HP-03",Y,shipped
+HP-02,"Home Page",public-bdd,"features/public/home.feature","@ui @regression @smoke @TC:HP-01 @TC:HP-09 @TC:HP-02 @TC:HP-03",Y,shipped
+HP-03,"Home Page",public-bdd,"features/public/home.feature","@ui @regression @smoke @TC:HP-01 @TC:HP-09 @TC:HP-02 @TC:HP-03",N,shipped
+HP-04,"Home Page",public-bdd,"features/public/home.feature","@ui @regression @smoke @TC:HP-01 @TC:HP-09 @TC:HP-02 @TC:HP-03",Y,shipped
+HP-05,"Home Page",public-bdd,"features/public/home.feature","@ui @regression @smoke @TC:HP-01 @TC:HP-09 @TC:HP-02 @TC:HP-03",Y,shipped
+HP-06,"Home Page",public-bdd,"features/public/home.feature","@ui @regression @smoke @TC:HP-01 @TC:HP-09 @TC:HP-02 @TC:HP-03",N,shipped
+HP-07,"Home Page",public-bdd,"features/public/home.feature","@ui @regression @smoke @TC:HP-01 @TC:HP-09 @TC:HP-02 @TC:HP-03",N,shipped
+BL-01,"Bilingual (i18n)",public-bdd,"features/public/language-toggle.feature","@ui @regression @smoke @TC:BL-01 @TC:BL-02 @TC:BL-03 @TC:BL-04",Y,pending
+BL-02,"Bilingual (i18n)",public-bdd,"features/public/language-toggle.feature","@ui @regression @smoke @TC:BL-01 @TC:BL-02 @TC:BL-03 @TC:BL-04",N,pending
+BL-03,"Bilingual (i18n)",public-bdd,"features/public/language-toggle.feature","@ui @regression @smoke @TC:BL-01 @TC:BL-02 @TC:BL-03 @TC:BL-04",N,pending
+BL-04,"Bilingual (i18n)",public-bdd,"features/public/language-toggle.feature","@ui @regression @smoke @TC:BL-01 @TC:BL-02 @TC:BL-03 @TC:BL-04",N,pending
+BL-05,"Bilingual (i18n)",public-bdd,"features/public/language-toggle.feature","@ui @regression @smoke @TC:BL-01 @TC:BL-02 @TC:BL-03 @TC:BL-04",N,pending
+UX-03,"UI-UX & Shared Components",public-bdd,"features/public/navigation.feature","@ui @regression @smoke @TC:UX-03 @TC:UX-01 @TC:UX-05 @TC:UX-02",Y,pending
+UX-01,"UI-UX & Shared Components",public-bdd,"features/public/navigation.feature","@ui @regression @smoke @TC:UX-03 @TC:UX-01 @TC:UX-05 @TC:UX-02",N,pending
+UX-05,"UI-UX & Shared Components",public-bdd,"features/public/navigation.feature","@ui @regression @smoke @TC:UX-03 @TC:UX-01 @TC:UX-05 @TC:UX-02",Y,pending
+UX-02,"UI-UX & Shared Components",public-bdd,"features/public/navigation.feature","@ui @regression @smoke @TC:UX-03 @TC:UX-01 @TC:UX-05 @TC:UX-02",N,pending
+UX-04,"UI-UX & Shared Components",public-bdd,"features/public/navigation.feature","@ui @regression @smoke @TC:UX-03 @TC:UX-01 @TC:UX-05 @TC:UX-02",N,pending
+UX-06,"UI-UX & Shared Components",public-bdd,"features/public/navigation.feature","@ui @regression @smoke @TC:UX-03 @TC:UX-01 @TC:UX-05 @TC:UX-02",N,pending
+UX-07,"UI-UX & Shared Components",public-bdd,"features/public/navigation.feature","@ui @regression @smoke @TC:UX-03 @TC:UX-01 @TC:UX-05 @TC:UX-02",Y,pending
+UX-08,"UI-UX & Shared Components",public-bdd,"features/public/navigation.feature","@ui @regression @smoke @TC:UX-03 @TC:UX-01 @TC:UX-05 @TC:UX-02",N,pending
+UX-09,"UI-UX & Shared Components",public-bdd,"features/public/navigation.feature","@ui @regression @smoke @TC:UX-03 @TC:UX-01 @TC:UX-05 @TC:UX-02",N,pending
+NM-01,"News & Media",public-bdd,"features/public/news.feature","@ui @regression @TC:NM-01 @TC:NM-02 @TC:NM-03 @TC:NM-04 @TC:NM-05 @TC:NM-06",N,pending
+NM-02,"News & Media",public-bdd,"features/public/news.feature","@ui @regression @TC:NM-01 @TC:NM-02 @TC:NM-03 @TC:NM-04 @TC:NM-05 @TC:NM-06",Y,pending
+NM-03,"News & Media",public-bdd,"features/public/news.feature","@ui @regression @TC:NM-01 @TC:NM-02 @TC:NM-03 @TC:NM-04 @TC:NM-05 @TC:NM-06",Y,pending
+NM-04,"News & Media",public-bdd,"features/public/news.feature","@ui @regression @TC:NM-01 @TC:NM-02 @TC:NM-03 @TC:NM-04 @TC:NM-05 @TC:NM-06",Y,pending
+NM-05,"News & Media",public-bdd,"features/public/news.feature","@ui @regression @TC:NM-01 @TC:NM-02 @TC:NM-03 @TC:NM-04 @TC:NM-05 @TC:NM-06",N,pending
+NM-06,"News & Media",public-bdd,"features/public/news.feature","@ui @regression @TC:NM-01 @TC:NM-02 @TC:NM-03 @TC:NM-04 @TC:NM-05 @TC:NM-06",Y,pending
+NM-07,"News & Media",public-bdd,"features/public/news.feature","@ui @regression @TC:NM-01 @TC:NM-02 @TC:NM-03 @TC:NM-04 @TC:NM-05 @TC:NM-06",Y,pending
+NM-08,"News & Media",public-bdd,"features/public/news.feature","@ui @regression @TC:NM-01 @TC:NM-02 @TC:NM-03 @TC:NM-04 @TC:NM-05 @TC:NM-06",Y,pending
+RA-01,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",Y,shipped
+RA-02,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",Y,shipped
+RA-03,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",Y,shipped
+RA-04,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",Y,shipped
+RA-05,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",Y,shipped
+RA-06,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",Y,shipped
+RA-07,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",Y,shipped
+RA-08,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",Y,shipped
+RA-09,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",Y,shipped
+RA-10,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",Y,shipped
+RA-11,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",Y,shipped
+RA-12,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",N,shipped
+RA-13,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",Y,shipped
+RA-14,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",N,shipped
+RA-15,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",Y,shipped
+RA-16,"Reports & Accounts",public-bdd,"features/public/reports-search.feature","@ui @regression @smoke @TC:RA-01 @TC:RA-02 @TC:RA-03 @TC:RA-04",Y,shipped
+SS-01,"State Subsites",public-bdd,"features/public/states.feature","@ui @regression @TC:SS-01 @TC:SS-08",Y,pending
+SS-08,"State Subsites",public-bdd,"features/public/states.feature","@ui @regression @TC:SS-01 @TC:SS-08",Y,pending
+API-01,"API Testing",api,"tests/api/api01Home.spec.ts","@playwright @qa @api @TC:API-01",Y,pending
+API-02,"API Testing",api,"tests/api/api02Reports.spec.ts","@playwright @qa @api @TC:API-02",Y,pending
+API-03,"API Testing",api,"tests/api/api03ReportDetail.spec.ts","@playwright @qa @api @TC:API-03",Y,pending
+API-04,"API Testing",api,"tests/api/api04ReportFilters.spec.ts","@playwright @qa @api @TC:API-04",Y,pending
+API-05,"API Testing",api,"tests/api/api05Accounts.spec.ts","@playwright @qa @api @TC:API-05",Y,pending
+API-06,"API Testing",api,"tests/api/api06StateAccounts.spec.ts","@playwright @qa @api @TC:API-06",Y,pending
+API-07,"API Testing",api,"tests/api/api07StateAccountDetail.spec.ts","@playwright @qa @api @TC:API-07",Y,pending
+API-08,"API Testing",api,"tests/api/api08CombinedAccounts.spec.ts","@playwright @qa @api @TC:API-08",Y,pending
+API-09,"API Testing",api,"tests/api/api09CombinedAccountDetail.spec.ts","@playwright @qa @api @TC:API-09",Y,pending
+API-10,"API Testing",api,"tests/api/api10Events.spec.ts","@playwright @qa @api @TC:API-10",Y,pending
+API-11,"API Testing",api,"tests/api/api11News.spec.ts","@playwright @qa @api @TC:API-11",Y,pending
+API-12,"API Testing",api,"tests/api/api12NewsDetail.spec.ts","@playwright @qa @api @TC:API-12",Y,pending
+API-13,"API Testing",api,"tests/api/api13Pages.spec.ts","@playwright @qa @api @TC:API-13",Y,pending
+API-14,"API Testing",api,"tests/api/api14OrganisationChart.spec.ts","@playwright @qa @api @TC:API-14",Y,pending
+API-15,"API Testing",api,"tests/api/api15FormerCag.spec.ts","@playwright @qa @api @TC:API-15",Y,pending
+API-16,"API Testing",api,"tests/api/api16States.spec.ts","@playwright @qa @api @TC:API-16",Y,pending
+API-17,"API Testing",api,"tests/api/api17StateDetail.spec.ts","@playwright @qa @api @TC:API-17",Y,pending
+API-18,"API Testing",api,"tests/api/api18HealthDocs.spec.ts","@playwright @qa @api @TC:API-18",Y,pending
+API-19,"API Testing",api,"tests/api/api19Auth.spec.ts","@playwright @qa @api @TC:API-19",Y,pending
+API-20,"API Testing",api,"tests/api/api20AdminCrud.spec.ts","@playwright @qa @api @TC:API-20",Y,pending

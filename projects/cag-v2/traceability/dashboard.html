@@ -1,0 +1,3290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CAG v2 Traceability Matrix & Workbook Verification</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --purple: #a855f7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 24px;
+      line-height: 1.5;
+    }
+    .header {
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+    .header h1 { font-size: 24px; color: var(--primary); margin-bottom: 8px; }
+    .provenance-bar {
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: monospace;
+      font-size: 13px;
+      color: #bae6fd;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .provenance-bar span strong { color: #fff; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .stat-card .title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); }
+    .stat-card .value { font-size: 28px; font-weight: 700; margin: 8px 0; }
+    .stat-card .desc { font-size: 12px; color: var(--text-muted); }
+    .val-success { color: var(--success); }
+    .val-primary { color: var(--primary); }
+    .val-warning { color: var(--warning); }
+    .val-danger { color: var(--danger); }
+    .val-purple { color: var(--purple); }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 10px 18px;
+      font-size: 14px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      background: rgba(56, 189, 248, 0.05);
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: #111827;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-shipped { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .badge-pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-cand { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+    .badge-manual { background: rgba(148, 163, 184, 0.15); color: #94a3b8; }
+    .badge-defect { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .quality-alert {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      color: #fde68a;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>CAG Website v2 — Traceability Matrix & Workbook Verification</h1>
+    <div class="provenance-bar">
+      <span>Workbook: <strong>cag-v2-test-cases.xlsx</strong></span>
+      <span>SHA-256: <strong>61445D43061034D01F1A9C3D4954E25A4585960B4011EE608B28704197160BA9</strong></span>
+      <span>Total Rows / TCs: <strong>253</strong> (20 Sheets)</span>
+      <span>Modified: <strong>2026-09-29T06:17:17.928Z</strong></span>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="title">Automated & Active</div>
+      <div class="value val-success">49</div>
+      <div class="desc">Shipped + Written + Active in CI (41 candidates)</div>
+    </div>
+    <div class="stat-card">
+      <div class="title">Automated, Awaiting Dev</div>
+      <div class="value val-purple">40</div>
+      <div class="desc">Written + @pending + Excluded from CI (17 candidates)</div>
+    </div>
+    <div class="stat-card">
+      <div class="title">Backlog (True QA Queue)</div>
+      <div class="value val-warning">0</div>
+      <div class="desc">Shipped Candidates not yet automated</div>
+    </div>
+    <div class="stat-card">
+      <div class="title">Coverage vs Shipped Cand.</div>
+      <div class="value val-primary">100%</div>
+      <div class="desc">41 of 41 shipped candidates</div>
+    </div>
+    <div class="stat-card">
+      <div class="title">Coverage vs All Cand.</div>
+      <div class="value val-primary">53%</div>
+      <div class="desc">58 of 109 candidates (Active: 38%)</div>
+    </div>
+    <div class="stat-card">
+      <div class="title">Open Defects</div>
+      <div class="value val-danger">15</div>
+      <div class="desc">15 OPEN (Severity column blank in workbook)</div>
+    </div>
+    <div class="stat-card">
+      <div class="title">Orphan Tags</div>
+      <div class="value val-success">0</div>
+      <div class="desc">Every test tag maps to real workbook ID</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="openTab(event, 'tab-summary')">Summary Derivations</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-active')">Automated & Active (49)</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-awaiting')">Automated, Awaiting Dev (40)</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-backlog')">Backlog (0)</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-all')">All Test Cases (253)</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-defects')">Defects (15)</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-framework')">Framework Checks (0)</button>
+  </div>
+
+  <!-- TAB: Summary Derivations -->
+  <div id="tab-summary" class="tab-content active">
+    <div class="quality-alert">
+      <strong>Rule §E.2 / §E.3 Reconciliation:</strong> Module statuses are derived dynamically from the <code>Summary</code> sheet cell values (<em>Allocated by</em> and <em>Status</em>). Resources & Library (RL) row count is fixed at 14 rows (workbook formula uses A2:A9 omitting rows 14-19). Total workbook test cases = <strong>253</strong> across 20 module sheets.
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Module Name</th>
+          <th>Sheet Name</th>
+          <th>Allocated By (Summary Col 2)</th>
+          <th>Status (Summary Col 3)</th>
+          <th>Derived Flag</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+              <td>1</td>
+              <td><strong>Home Page</strong></td>
+              <td>HP - Home Page</td>
+              <td>Sakthi Balaji</td>
+              <td>Completed</td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+            </tr><tr>
+              <td>2</td>
+              <td><strong>About Us</strong></td>
+              <td>AU - About Us</td>
+              <td>Siva sri</td>
+              <td>Completed</td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+            </tr><tr>
+              <td>3</td>
+              <td><strong>Reports & Accounts</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Sakthi Balaji</td>
+              <td>Completed</td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+            </tr><tr>
+              <td>4</td>
+              <td><strong>Our Presence</strong></td>
+              <td>OP - Our Presence</td>
+              <td>Saraswathi</td>
+              <td>Completed</td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+            </tr><tr>
+              <td>5</td>
+              <td><strong>Careers & Engagement</strong></td>
+              <td>CE - Careers & Engagement</td>
+              <td>Pending from Dev</td>
+              <td><empty></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+            </tr><tr>
+              <td>6</td>
+              <td><strong>Resources & Library</strong></td>
+              <td>RL - Resources & Library</td>
+              <td>Hannah</td>
+              <td>Completed</td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+            </tr><tr>
+              <td>7</td>
+              <td><strong>State Subsites</strong></td>
+              <td>SS - State Subsites</td>
+              <td>Pending from Dev</td>
+              <td><empty></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+            </tr><tr>
+              <td>8</td>
+              <td><strong>Contact Us</strong></td>
+              <td>CT - Contact</td>
+              <td>Pending from Dev</td>
+              <td><empty></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+            </tr><tr>
+              <td>9</td>
+              <td><strong>News & events</strong></td>
+              <td>NM - News & Media</td>
+              <td>Pending from Dev</td>
+              <td><empty></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+            </tr><tr>
+              <td>10</td>
+              <td><strong>Global relations</strong></td>
+              <td>GR - Global Relations</td>
+              <td>Pending from Dev</td>
+              <td><empty></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+            </tr><tr>
+              <td>11</td>
+              <td><strong>UI-UX & Shared Components</strong></td>
+              <td>UX - UI-UX & Shared Components</td>
+              <td>Pending from Dev</td>
+              <td><empty></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+            </tr><tr>
+              <td>12</td>
+              <td><strong>Bilingual (i18n)</strong></td>
+              <td>BL - Bilingual (i18n)</td>
+              <td>Pending from Dev</td>
+              <td><empty></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+            </tr><tr>
+              <td>13</td>
+              <td><strong>Admin - Authentication</strong></td>
+              <td>AA - Admin - Authentication</td>
+              <td>Sakthi Balaji</td>
+              <td>Completed</td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+            </tr><tr>
+              <td>14</td>
+              <td><strong>Admin - Dashboard</strong></td>
+              <td>AD - Admin - Dashboard</td>
+              <td>Pending from Dev</td>
+              <td><empty></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+            </tr><tr>
+              <td>15</td>
+              <td><strong>Admin - CRUD Modules</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Pending from Dev</td>
+              <td><empty></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+            </tr><tr>
+              <td>16</td>
+              <td><strong>Admin - File Upload</strong></td>
+              <td>AF - Admin - File Upload</td>
+              <td>Pending from Dev</td>
+              <td><empty></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+            </tr><tr>
+              <td>17</td>
+              <td><strong>Admin - Audit Log</strong></td>
+              <td>AL - Admin - Audit Log</td>
+              <td>Thiru vikraman</td>
+              <td>In Progress</td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+            </tr><tr>
+              <td>18</td>
+              <td><strong>Figma Design Parity</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Pending from Dev</td>
+              <td><empty></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+            </tr><tr>
+              <td>19</td>
+              <td><strong>API Testing</strong></td>
+              <td>API - API Testing</td>
+              <td>Pending from Dev</td>
+              <td><empty></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+            </tr><tr>
+              <td>20</td>
+              <td><strong>Non-Functional</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Pending from Dev</td>
+              <td><empty></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+            </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TAB: Automated & Active -->
+  <div id="tab-active" class="tab-content">
+    <table>
+      <thead>
+        <tr>
+          <th>TC ID</th>
+          <th>Module</th>
+          <th>Scenario</th>
+          <th>Candidate</th>
+          <th>Suite</th>
+          <th>Test File Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+              <td><strong>HP-01</strong></td>
+              <td>Home Page</td>
+              <td>Verify hero banner content and imagery load correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/home.feature</code></td>
+            </tr><tr>
+              <td><strong>HP-02</strong></td>
+              <td>Home Page</td>
+              <td>Verify homepage statistics reflect data from /api/home</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/home.feature</code></td>
+            </tr><tr>
+              <td><strong>HP-03</strong></td>
+              <td>Home Page</td>
+              <td>Verify CAG message/quote section renders with correct attribution</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/home.feature</code></td>
+            </tr><tr>
+              <td><strong>HP-04</strong></td>
+              <td>Home Page</td>
+              <td>Verify latest news/highlight cards render sorted by date</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/home.feature</code></td>
+            </tr><tr>
+              <td><strong>HP-05</strong></td>
+              <td>Home Page</td>
+              <td>Verify homepage quick-link cards navigate to the correct destination pages</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/home.feature</code></td>
+            </tr><tr>
+              <td><strong>HP-06</strong></td>
+              <td>Home Page</td>
+              <td>Verify homepage layout adapts across breakpoints</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/home.feature</code></td>
+            </tr><tr>
+              <td><strong>HP-07</strong></td>
+              <td>Home Page</td>
+              <td>Verify homepage content toggles correctly between English and Hindi</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/home.feature</code></td>
+            </tr><tr>
+              <td><strong>HP-09</strong></td>
+              <td>Home Page</td>
+              <td>Verify no broken images or links on the homepage</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/home.feature</code></td>
+            </tr><tr>
+              <td><strong>AU-01</strong></td>
+              <td>About Us</td>
+              <td>Verify About Us landing page lists all 11 sub-category links</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/about-us.feature</code></td>
+            </tr><tr>
+              <td><strong>AU-02</strong></td>
+              <td>About Us</td>
+              <td>Verify each About Us sub-category page loads correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/about-us.feature</code></td>
+            </tr><tr>
+              <td><strong>AU-06</strong></td>
+              <td>About Us</td>
+              <td>Verify officer tree data matches the /api/organisation-chart response</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/about-us.feature</code></td>
+            </tr><tr>
+              <td><strong>AU-09</strong></td>
+              <td>About Us</td>
+              <td>Verify breadcrumb trail updates correctly within About Us</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/about-us.feature</code></td>
+            </tr><tr>
+              <td><strong>AU-10</strong></td>
+              <td>About Us</td>
+              <td>Verify an About Us sub-page loads correctly via direct URL</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/about-us.feature</code></td>
+            </tr><tr>
+              <td><strong>AU-11</strong></td>
+              <td>About Us</td>
+              <td>Verify node details tooltip displays fully without screen clipping on hover</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/about-us.feature</code></td>
+            </tr><tr>
+              <td><strong>OP-04</strong></td>
+              <td>Our Presence</td>
+              <td>Verify the Central Audit Offices sub-page lists all central-level offices correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/our-presence.feature</code></td>
+            </tr><tr>
+              <td><strong>OP-05</strong></td>
+              <td>Our Presence</td>
+              <td>Verify the State-Level Offices sub-page lists State Accountant General offices correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/our-presence.feature</code></td>
+            </tr><tr>
+              <td><strong>OP-06</strong></td>
+              <td>Our Presence</td>
+              <td>Verify the Training Institutes sub-page lists NAAA and regional centres correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/our-presence.feature</code></td>
+            </tr><tr>
+              <td><strong>OP-07</strong></td>
+              <td>Our Presence</td>
+              <td>Verify all 4 Our Presence sub-pages are reachable from the menu</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/our-presence.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-01</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify Reports page loads the default first page with default sort and page size</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-02</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify searching by keyword returns only matching reports</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-03</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify filtering by Government Level returns the correct subset</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-04</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify filtering by Ministry/Sector returns the correct subset</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-05</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify filtering by report type returns the correct subset</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-06</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify filtering by year returns the correct subset</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-07</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify filtering by state returns the correct subset</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-08</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify multiple simultaneous filters apply AND logic correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-09</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify all sort options reorder results correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-10</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify pagination returns correct, non-duplicated records across pages</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-11</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify a report's detail data is complete and correct</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-12</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify downloading a report file works correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-13</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify a clear message displays when search/filter criteria return zero results</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-14</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify the filters sidebar expands/collapses and reflects active selections</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-15</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify State Accounts section lists paginated records correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RA-16</strong></td>
+              <td>Reports & Accounts</td>
+              <td>Verify Combined Accounts section lists and details records correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/reports-accounts.feature</code></td>
+            </tr><tr>
+              <td><strong>RL-01</strong></td>
+              <td>Resources & Library</td>
+              <td>Verify Resources & Library page displays all 4 categories</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/resources-library.feature</code></td>
+            </tr><tr>
+              <td><strong>RL-02</strong></td>
+              <td>Resources & Library</td>
+              <td>Verify each category lists its documents correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/resources-library.feature</code></td>
+            </tr><tr>
+              <td><strong>RL-04</strong></td>
+              <td>Resources & Library</td>
+              <td>Verify the Tenders sub-page lists current tenders with correct details</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/resources-library.feature</code></td>
+            </tr><tr>
+              <td><strong>RL-05</strong></td>
+              <td>Resources & Library</td>
+              <td>Verify the Circulars sub-page lists departmental circulars correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>public-bdd</td>
+              <td><code>features/public/resources-library.feature</code></td>
+            </tr><tr>
+              <td><strong>AA-01</strong></td>
+              <td>Admin - Authentication</td>
+              <td>Verify login with valid admin credentials succeeds</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>admin-bdd</td>
+              <td><code>features/admin/authentication.feature</code></td>
+            </tr><tr>
+              <td><strong>AA-02</strong></td>
+              <td>Admin - Authentication</td>
+              <td>Verify login with an incorrect password is rejected</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>admin-bdd</td>
+              <td><code>features/admin/authentication.feature</code></td>
+            </tr><tr>
+              <td><strong>AA-03</strong></td>
+              <td>Admin - Authentication</td>
+              <td>Verify whether the documented default credentials are still active</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td>admin-bdd</td>
+              <td><code>features/admin/authentication.feature</code></td>
+            </tr><tr>
+              <td><strong>AA-04</strong></td>
+              <td>Admin - Authentication</td>
+              <td>Verify the admin session expires after 8 hours</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td>admin-bdd</td>
+              <td><code>features/admin/authentication.feature</code></td>
+            </tr><tr>
+              <td><strong>AA-05</strong></td>
+              <td>Admin - Authentication</td>
+              <td>Verify the JWT does not expose sensitive data beyond documented claims</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td>admin-bdd</td>
+              <td><code>features/admin/authentication.feature</code></td>
+            </tr><tr>
+              <td><strong>AA-06</strong></td>
+              <td>Admin - Authentication</td>
+              <td>Verify admin routes redirect unauthenticated users to login</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>admin-bdd</td>
+              <td><code>features/admin/authentication.feature</code></td>
+            </tr><tr>
+              <td><strong>AA-07</strong></td>
+              <td>Admin - Authentication</td>
+              <td>Verify logout terminates the session correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>admin-bdd</td>
+              <td><code>features/admin/authentication.feature</code></td>
+            </tr><tr>
+              <td><strong>AL-01</strong></td>
+              <td>Admin - Audit Log</td>
+              <td>Verify a CREATE action is logged correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>admin-bdd</td>
+              <td><code>features/admin/audit-log.feature</code></td>
+            </tr><tr>
+              <td><strong>AL-02</strong></td>
+              <td>Admin - Audit Log</td>
+              <td>Verify an UPDATE action captures old and new data correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>admin-bdd</td>
+              <td><code>features/admin/audit-log.feature</code></td>
+            </tr><tr>
+              <td><strong>AL-03</strong></td>
+              <td>Admin - Audit Log</td>
+              <td>Verify a DELETE action captures the deleted record's prior state</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>admin-bdd</td>
+              <td><code>features/admin/audit-log.feature</code></td>
+            </tr><tr>
+              <td><strong>AL-06</strong></td>
+              <td>Admin - Audit Log</td>
+              <td>Verify the audit-log viewer filters/sorts entries correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td>admin-bdd</td>
+              <td><code>features/admin/audit-log.feature</code></td>
+            </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TAB: Automated, Awaiting Dev -->
+  <div id="tab-awaiting" class="tab-content">
+    <div class="quality-alert">
+      <strong>Amended Decision D6:</strong> Tests for pending modules are written in parallel. They carry <code>@pending</code>, are excluded from all CI gates (smoke, regression, deploy gate), and are promoted by removing <code>@pending</code> when the module ships.
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>TC ID</th>
+          <th>Module</th>
+          <th>Scenario</th>
+          <th>Candidate</th>
+          <th>Module Status</th>
+          <th>Test File Location</th>
+          <th>Tags</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+              <td><strong>NM-01</strong></td>
+              <td>News & Media</td>
+              <td>Verify the News & Media admin list screen matches the Figma list/CRUD pattern</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/news-media.feature</code></td>
+              <td><code>@ui @regression @module:news @sheet:NM @area:public @TC:NM-01 @priority:high @type:ui</code></td>
+            </tr><tr>
+              <td><strong>NM-02</strong></td>
+              <td>News & Media</td>
+              <td>Verify a new news/media item can be created with all mandatory fields</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/news-media.feature</code></td>
+              <td><code>@TC:NM-02 @smoke @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>NM-03</strong></td>
+              <td>News & Media</td>
+              <td>Verify an existing news/media item can be edited and changes persist</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/news-media.feature</code></td>
+              <td><code>@TC:NM-03 @regression @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>NM-04</strong></td>
+              <td>News & Media</td>
+              <td>Verify a news/media item can be deleted and is removed from the public listing</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/news-media.feature</code></td>
+              <td><code>@TC:NM-04 @regression @priority:medium @type:functional</code></td>
+            </tr><tr>
+              <td><strong>NM-05</strong></td>
+              <td>News & Media</td>
+              <td>Verify a news/media item with English and Hindi field variants saves and renders correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/news-media.feature</code></td>
+              <td><code>@TC:NM-05 @regression @priority:medium @type:ui</code></td>
+            </tr><tr>
+              <td><strong>NM-06</strong></td>
+              <td>News & Media</td>
+              <td>Verify image/media uploads for a news item are validated correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/news-media.feature</code></td>
+              <td><code>@TC:NM-06 @smoke @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>SS-01</strong></td>
+              <td>State Subsites</td>
+              <td>Verify a state subsite loads correctly via its URL</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/state-subsites.feature</code></td>
+              <td><code>@TC:SS-01 @smoke @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>SS-02</strong></td>
+              <td>State Subsites</td>
+              <td>Verify the Pension section displays description and case status date correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/state-subsites.feature</code></td>
+              <td><code>@ui @regression @module:states @sheet:SS @area:public @TC:SS-02 @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>SS-04</strong></td>
+              <td>State Subsites</td>
+              <td>Verify the Monthly Key Indicators data displays correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/state-subsites.feature</code></td>
+              <td><code>@TC:SS-04 @regression @priority:medium @type:functional</code></td>
+            </tr><tr>
+              <td><strong>SS-06</strong></td>
+              <td>State Subsites</td>
+              <td>Verify the Finance Account data displays correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/state-subsites.feature</code></td>
+              <td><code>@TC:SS-06 @regression @priority:medium @type:functional</code></td>
+            </tr><tr>
+              <td><strong>SS-08</strong></td>
+              <td>State Subsites</td>
+              <td>Verify Quick Links section items navigate/open correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/state-subsites.feature</code></td>
+              <td><code>@TC:SS-08 @smoke @priority:medium @type:functional</code></td>
+            </tr><tr>
+              <td><strong>SS-10</strong></td>
+              <td>State Subsites</td>
+              <td>Verify subsite structure is consistent across multiple states</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/state-subsites.feature</code></td>
+              <td><code>@TC:SS-10 @regression @priority:high @type:ui</code></td>
+            </tr><tr>
+              <td><strong>UX-01</strong></td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify the redesigned core Header displays all intended elements</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/shared-components.feature</code></td>
+              <td><code>@ui @regression @module:ux @sheet:UX @area:public @TC:UX-01 @TC:UX-05 @priority:high @type:ui</code></td>
+            </tr><tr>
+              <td><strong>UX-02</strong></td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify addon/Header.tsx parity with the core Header where the addon variant is used</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/shared-components.feature</code></td>
+              <td><code>@TC:UX-02 @regression @priority:high @type:ui</code></td>
+            </tr><tr>
+              <td><strong>UX-03</strong></td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify the 5 main navigation items appear in the correct order with correct sub-menus</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/shared-components.feature</code></td>
+              <td><code>@TC:UX-03 @smoke @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>UX-04</strong></td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify addon/Menu.tsx enhanced multi-level navigation matches core Menu behaviour</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/shared-components.feature</code></td>
+              <td><code>@TC:UX-04 @regression @priority:medium @type:ui</code></td>
+            </tr><tr>
+              <td><strong>UX-05</strong></td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify Footer displays correct contact details and external links</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/shared-components.feature</code></td>
+              <td><code>@ui @regression @module:ux @sheet:UX @area:public @TC:UX-01 @TC:UX-05 @priority:high @type:ui</code></td>
+            </tr><tr>
+              <td><strong>UX-06</strong></td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify addon/Footer.tsx parity with the core Footer</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/shared-components.feature</code></td>
+              <td><code>@TC:UX-06 @regression @priority:medium @type:functional</code></td>
+            </tr><tr>
+              <td><strong>UX-07</strong></td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify breadcrumb trails are present and accurate on nested pages</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/shared-components.feature</code></td>
+              <td><code>@TC:UX-07 @smoke @priority:medium @type:ui</code></td>
+            </tr><tr>
+              <td><strong>UX-08</strong></td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify addon/Breadcrumb.tsx configurable labels render correctly where used</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/shared-components.feature</code></td>
+              <td><code>@TC:UX-08 @regression @priority:low @type:functional</code></td>
+            </tr><tr>
+              <td><strong>BL-01</strong></td>
+              <td>Bilingual (i18n)</td>
+              <td>Verify a language toggle is present and functional on every public page</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/bilingual.feature</code></td>
+              <td><code>@ui @regression @module:bilingual @sheet:BL @area:public @TC:BL-01 @smoke @priority:high @type:localization</code></td>
+            </tr><tr>
+              <td><strong>BL-02</strong></td>
+              <td>Bilingual (i18n)</td>
+              <td>Verify the selected language persists when navigating between pages</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/bilingual.feature</code></td>
+              <td><code>@TC:BL-02 @smoke @priority:high @type:localization</code></td>
+            </tr><tr>
+              <td><strong>BL-03</strong></td>
+              <td>Bilingual (i18n)</td>
+              <td>Verify Hindi text renders correctly using Noto Sans</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/bilingual.feature</code></td>
+              <td><code>@TC:BL-03 @regression @priority:high @type:localization</code></td>
+            </tr><tr>
+              <td><strong>BL-04</strong></td>
+              <td>Bilingual (i18n)</td>
+              <td>Verify longer Hindi translations do not break page layout</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/bilingual.feature</code></td>
+              <td><code>@TC:BL-04 @regression @priority:medium @type:localization</code></td>
+            </tr><tr>
+              <td><strong>BL-05</strong></td>
+              <td>Bilingual (i18n)</td>
+              <td>Verify no untranslated English text appears when in Hindi mode</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/bilingual.feature</code></td>
+              <td><code>@TC:BL-05 @regression @priority:high @type:localization</code></td>
+            </tr><tr>
+              <td><strong>AC-01</strong></td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify a new record can be created with all mandatory fields</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/crud.feature</code></td>
+              <td><code>@ui @regression @module:crud @sheet:AC @area:admin @TC:AC-01 @TC:AC-08 @smoke @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>AC-02</strong></td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify the DataTable displays correct columns and data types</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/crud.feature</code></td>
+              <td><code>@TC:AC-02 @smoke @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>AC-03</strong></td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify an existing record can be edited and changes persist</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/crud.feature</code></td>
+              <td><code>@TC:AC-03 @regression @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>AC-04</strong></td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify a record can be deleted and is removed from the list</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/crud.feature</code></td>
+              <td><code>@TC:AC-04 @regression @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>AC-05</strong></td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify required-field validation prevents incomplete submissions</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/crud.feature</code></td>
+              <td><code>@TC:AC-05 @regression @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>AC-06</strong></td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify every documented form field type renders and behaves correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/crud.feature</code></td>
+              <td><code>@TC:AC-06 @regression @priority:medium @type:functional</code></td>
+            </tr><tr>
+              <td><strong>AC-07</strong></td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify the configured search column filters records correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/crud.feature</code></td>
+              <td><code>@TC:AC-07 @regression @priority:medium @type:functional</code></td>
+            </tr><tr>
+              <td><strong>AC-08</strong></td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify Admin changes to a report reflect on the public Reports page</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/crud.feature</code></td>
+              <td><code>@ui @regression @module:crud @sheet:AC @area:admin @TC:AC-01 @TC:AC-08 @smoke @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>AC-09</strong></td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify a CMS page created/edited in Admin renders correctly at its public slug</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/crud.feature</code></td>
+              <td><code>@TC:AC-09 @regression @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>AC-10</strong></td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify Admin-created events/news appear on public listings</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/crud.feature</code></td>
+              <td><code>@TC:AC-10 @regression @priority:medium @type:security</code></td>
+            </tr><tr>
+              <td><strong>AC-11</strong></td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify a new hierarchical menu item reflects in public navigation</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/crud.feature</code></td>
+              <td><code>@TC:AC-11 @regression @priority:medium @type:security</code></td>
+            </tr><tr>
+              <td><strong>AC-12</strong></td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify an officer record change reflects in the public org chart</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/crud.feature</code></td>
+              <td><code>@TC:AC-12 @regression @priority:medium @type:localization</code></td>
+            </tr><tr>
+              <td><strong>AC-13</strong></td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify an admin user can be created with a role</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/crud.feature</code></td>
+              <td><code>@TC:AC-13 @regression @priority:medium @type:ui</code></td>
+            </tr><tr>
+              <td><strong>AC-14</strong></td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify a record with English and Hindi field variants saves and renders correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/crud.feature</code></td>
+              <td><code>@TC:AC-14 @smoke @priority:high @type:data-integrity</code></td>
+            </tr><tr>
+              <td><strong>AC-15</strong></td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify pagination and column sorting work correctly for a large table</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/crud.feature</code></td>
+              <td><code>@TC:AC-15 @regression @priority:medium @type:functional</code></td>
+            </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TAB: Backlog -->
+  <div id="tab-backlog" class="tab-content">
+    <div class="quality-alert">
+      <strong>True QA Queue:</strong> These 0 test cases are candidates on <em>shipped modules</em> that have not yet been automated. This is the primary backlog queue for upcoming sprints.
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>TC ID</th>
+          <th>Module</th>
+          <th>Scenario</th>
+          <th>Priority</th>
+          <th>Expected Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TAB: All Test Cases -->
+  <div id="tab-all" class="tab-content">
+    <table>
+      <thead>
+        <tr>
+          <th>TC ID</th>
+          <th>Sheet</th>
+          <th>Module</th>
+          <th>Scenario</th>
+          <th>Candidate</th>
+          <th>Status</th>
+          <th>Automated</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+              <td><strong>HP-01</strong></td>
+              <td>HP - Home Page</td>
+              <td>Home Page</td>
+              <td>Verify hero banner content and imagery load correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>HP-02</strong></td>
+              <td>HP - Home Page</td>
+              <td>Home Page</td>
+              <td>Verify homepage statistics reflect data from /api/home</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>HP-03</strong></td>
+              <td>HP - Home Page</td>
+              <td>Home Page</td>
+              <td>Verify CAG message/quote section renders with correct attribution</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>HP-04</strong></td>
+              <td>HP - Home Page</td>
+              <td>Home Page</td>
+              <td>Verify latest news/highlight cards render sorted by date</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>HP-05</strong></td>
+              <td>HP - Home Page</td>
+              <td>Home Page</td>
+              <td>Verify homepage quick-link cards navigate to the correct destination pages</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>HP-06</strong></td>
+              <td>HP - Home Page</td>
+              <td>Home Page</td>
+              <td>Verify homepage layout adapts across breakpoints</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>HP-07</strong></td>
+              <td>HP - Home Page</td>
+              <td>Home Page</td>
+              <td>Verify homepage content toggles correctly between English and Hindi</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>HP-08</strong></td>
+              <td>HP - Home Page</td>
+              <td>Home Page</td>
+              <td>Measure homepage initial load time</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>HP-09</strong></td>
+              <td>HP - Home Page</td>
+              <td>Home Page</td>
+              <td>Verify no broken images or links on the homepage</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>HP-10</strong></td>
+              <td>HP - Home Page</td>
+              <td>Home Page</td>
+              <td>Verify homepage falls back gracefully when the backend API is unreachable</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AU-01</strong></td>
+              <td>AU - About Us</td>
+              <td>About Us</td>
+              <td>Verify About Us landing page lists all 11 sub-category links</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AU-02</strong></td>
+              <td>AU - About Us</td>
+              <td>About Us</td>
+              <td>Verify each About Us sub-category page loads correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AU-03</strong></td>
+              <td>AU - About Us</td>
+              <td>About Us</td>
+              <td>Verify the About Us sidebar (AboutusSidemenu) highlights the active section</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AU-04</strong></td>
+              <td>AU - About Us</td>
+              <td>About Us</td>
+              <td>Verify the Former CAGs gallery displays historical entries correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AU-05</strong></td>
+              <td>AU - About Us</td>
+              <td>About Us</td>
+              <td>Verify the hierarchical officer tree renders with expandable/collapsible nodes</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AU-06</strong></td>
+              <td>AU - About Us</td>
+              <td>About Us</td>
+              <td>Verify officer tree data matches the /api/organisation-chart response</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AU-07</strong></td>
+              <td>AU - About Us</td>
+              <td>About Us</td>
+              <td>Verify Advisory Board Member cards distinguish internal vs external roles</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AU-08</strong></td>
+              <td>AU - About Us</td>
+              <td>About Us</td>
+              <td>Verify all About Us sub-pages translate correctly between English and Hindi</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AU-09</strong></td>
+              <td>AU - About Us</td>
+              <td>About Us</td>
+              <td>Verify breadcrumb trail updates correctly within About Us</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AU-10</strong></td>
+              <td>AU - About Us</td>
+              <td>About Us</td>
+              <td>Verify an About Us sub-page loads correctly via direct URL</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AU-11</strong></td>
+              <td>AU - About Us</td>
+              <td>About Us</td>
+              <td>Verify node details tooltip displays fully without screen clipping on hover</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>OP-01</strong></td>
+              <td>OP - Our Presence</td>
+              <td>Our Presence</td>
+              <td>Verify the interactive office pin-map loads with all documented office pins</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>OP-02</strong></td>
+              <td>OP - Our Presence</td>
+              <td>Our Presence</td>
+              <td>Verify clicking a pin shows office details</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>OP-03</strong></td>
+              <td>OP - Our Presence</td>
+              <td>Our Presence</td>
+              <td>Verify pin coordinates match known office locations</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>OP-04</strong></td>
+              <td>OP - Our Presence</td>
+              <td>Our Presence</td>
+              <td>Verify the Central Audit Offices sub-page lists all central-level offices correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>OP-05</strong></td>
+              <td>OP - Our Presence</td>
+              <td>Our Presence</td>
+              <td>Verify the State-Level Offices sub-page lists State Accountant General offices correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>OP-06</strong></td>
+              <td>OP - Our Presence</td>
+              <td>Our Presence</td>
+              <td>Verify the Training Institutes sub-page lists NAAA and regional centres correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>OP-07</strong></td>
+              <td>OP - Our Presence</td>
+              <td>Our Presence</td>
+              <td>Verify all 4 Our Presence sub-pages are reachable from the menu</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>OP-08</strong></td>
+              <td>OP - Our Presence</td>
+              <td>Our Presence</td>
+              <td>Verify the pin-map remains interactive on smaller viewports</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>OP-09</strong></td>
+              <td>OP - Our Presence</td>
+              <td>Our Presence</td>
+              <td>Verify a non-visual alternative exists for map content</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>OP-10</strong></td>
+              <td>OP - Our Presence</td>
+              <td>Our Presence</td>
+              <td>Verify Our Presence content translates correctly between English and Hindi</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>RA-01</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify Reports page loads the default first page with default sort and page size</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-02</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify searching by keyword returns only matching reports</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-03</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify filtering by Government Level returns the correct subset</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-04</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify filtering by Ministry/Sector returns the correct subset</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-05</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify filtering by report type returns the correct subset</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-06</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify filtering by year returns the correct subset</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-07</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify filtering by state returns the correct subset</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-08</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify multiple simultaneous filters apply AND logic correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-09</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify all sort options reorder results correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-10</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify pagination returns correct, non-duplicated records across pages</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-11</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify a report's detail data is complete and correct</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-12</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify downloading a report file works correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-13</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify a clear message displays when search/filter criteria return zero results</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-14</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify the filters sidebar expands/collapses and reflects active selections</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-15</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify State Accounts section lists paginated records correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-16</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify Combined Accounts section lists and details records correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RA-17</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify Appropriation Accounts display correctly for a selected state</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>RA-18</strong></td>
+              <td>RA - Reports & Accounts</td>
+              <td>Reports & Accounts</td>
+              <td>Verify Reports search/filter/pagination remains responsive against ~10,000 records</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CT-01</strong></td>
+              <td>CT - Contact</td>
+              <td>Contact</td>
+              <td>Verify the Contact admin screen lists incoming messages/complaints per the Figma design</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CT-02</strong></td>
+              <td>CT - Contact</td>
+              <td>Contact</td>
+              <td>Verify opening a message shows its full detail correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CT-03</strong></td>
+              <td>CT - Contact</td>
+              <td>Contact</td>
+              <td>Verify a message's status can be progressed (e.g., New → In Progress → Resolved)</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CT-04</strong></td>
+              <td>CT - Contact</td>
+              <td>Contact</td>
+              <td>Verify an admin can respond to a contact message, if the feature is supported</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CT-05</strong></td>
+              <td>CT - Contact</td>
+              <td>Contact</td>
+              <td>Verify a message/complaint can be deleted</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CT-06</strong></td>
+              <td>CT - Contact</td>
+              <td>Contact</td>
+              <td>Verify searching the Contact list returns matching messages</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CT-07</strong></td>
+              <td>CT - Contact</td>
+              <td>Contact</td>
+              <td>Verify messages can be sorted (e.g., by date) and the Rows-per-page control works</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CT-08</strong></td>
+              <td>CT - Contact</td>
+              <td>Contact</td>
+              <td>Verify the count of open (New) messages matches the Dashboard's Pending Complaints KPI</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CT-09</strong></td>
+              <td>CT - Contact</td>
+              <td>Contact</td>
+              <td>Verify submitting the public Contact Us form creates a corresponding admin record</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CT-10</strong></td>
+              <td>CT - Contact</td>
+              <td>Contact</td>
+              <td>Verify the public Contact Us form validates required fields and email format</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CT-11</strong></td>
+              <td>CT - Contact</td>
+              <td>Contact</td>
+              <td>Verify the admin Contact list handles having no messages gracefully</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>GR-01</strong></td>
+              <td>GR - Global Relations</td>
+              <td>Global Relations</td>
+              <td>Verify the Global Relations admin list screen matches the Figma list/CRUD pattern</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>GR-02</strong></td>
+              <td>GR - Global Relations</td>
+              <td>Global Relations</td>
+              <td>Verify a new Global Relations entry (e.g., an international engagement, MOU or delegation record) can be created</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>GR-03</strong></td>
+              <td>GR - Global Relations</td>
+              <td>Global Relations</td>
+              <td>Verify an existing Global Relations entry can be edited and changes persist</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>GR-04</strong></td>
+              <td>GR - Global Relations</td>
+              <td>Global Relations</td>
+              <td>Verify a Global Relations entry can be deleted</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>GR-05</strong></td>
+              <td>GR - Global Relations</td>
+              <td>Global Relations</td>
+              <td>Verify a Global Relations entry with English and Hindi field variants saves and renders correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>GR-06</strong></td>
+              <td>GR - Global Relations</td>
+              <td>Global Relations</td>
+              <td>Verify searching the Global Relations list returns matching entries</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>GR-07</strong></td>
+              <td>GR - Global Relations</td>
+              <td>Global Relations</td>
+              <td>Verify the Sort By and Rows-per-page controls behave correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>GR-08</strong></td>
+              <td>GR - Global Relations</td>
+              <td>Global Relations</td>
+              <td>Verify a published Global Relations entry appears correctly on the public site</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>GR-09</strong></td>
+              <td>GR - Global Relations</td>
+              <td>Global Relations</td>
+              <td>Verify external links referenced in Global Relations content (e.g., INTOSAI, ASOSAI) resolve correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>GR-10</strong></td>
+              <td>GR - Global Relations</td>
+              <td>Global Relations</td>
+              <td>Verify the admin list and public section handle having no entries gracefully</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CE-01</strong></td>
+              <td>CE - Careers & Engagement</td>
+              <td>Careers & Engagement</td>
+              <td>Verify Careers & Engagement page displays all recruitment pathways</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CE-02</strong></td>
+              <td>CE - Careers & Engagement</td>
+              <td>Careers & Engagement</td>
+              <td>Verify each recruitment card shows correct description and any application link</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CE-03</strong></td>
+              <td>CE - Careers & Engagement</td>
+              <td>Careers & Engagement</td>
+              <td>Verify external application links open correctly in a new tab</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CE-04</strong></td>
+              <td>CE - Careers & Engagement</td>
+              <td>Careers & Engagement</td>
+              <td>Verify recruitment card content translates correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CE-05</strong></td>
+              <td>CE - Careers & Engagement</td>
+              <td>Careers & Engagement</td>
+              <td>Verify recruitment cards reflow correctly on smaller viewports</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CE-06</strong></td>
+              <td>CE - Careers & Engagement</td>
+              <td>Careers & Engagement</td>
+              <td>Verify careers content reflects currently active openings</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CE-07</strong></td>
+              <td>CE - Careers & Engagement</td>
+              <td>Careers & Engagement</td>
+              <td>Verify the Careers menu item is reachable and highlights as active</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>CE-08</strong></td>
+              <td>CE - Careers & Engagement</td>
+              <td>Careers & Engagement</td>
+              <td>Verify no broken links or missing assets on the Careers page</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NM-01</strong></td>
+              <td>NM - News & Media</td>
+              <td>News & Media</td>
+              <td>Verify the News & Media admin list screen matches the Figma list/CRUD pattern</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>NM-02</strong></td>
+              <td>NM - News & Media</td>
+              <td>News & Media</td>
+              <td>Verify a new news/media item can be created with all mandatory fields</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>NM-03</strong></td>
+              <td>NM - News & Media</td>
+              <td>News & Media</td>
+              <td>Verify an existing news/media item can be edited and changes persist</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>NM-04</strong></td>
+              <td>NM - News & Media</td>
+              <td>News & Media</td>
+              <td>Verify a news/media item can be deleted and is removed from the public listing</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>NM-05</strong></td>
+              <td>NM - News & Media</td>
+              <td>News & Media</td>
+              <td>Verify a news/media item with English and Hindi field variants saves and renders correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>NM-06</strong></td>
+              <td>NM - News & Media</td>
+              <td>News & Media</td>
+              <td>Verify image/media uploads for a news item are validated correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>NM-07</strong></td>
+              <td>NM - News & Media</td>
+              <td>News & Media</td>
+              <td>Verify searching the News & Media list returns matching items</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NM-08</strong></td>
+              <td>NM - News & Media</td>
+              <td>News & Media</td>
+              <td>Verify news items can be sorted by date and the Rows-per-page control works</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NM-09</strong></td>
+              <td>NM - News & Media</td>
+              <td>News & Media</td>
+              <td>Verify a published news item appears correctly and promptly on the public News listing</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NM-10</strong></td>
+              <td>NM - News & Media</td>
+              <td>News & Media</td>
+              <td>Verify published news items have no broken links or missing images</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NM-11</strong></td>
+              <td>NM - News & Media</td>
+              <td>News & Media</td>
+              <td>Verify the admin list and public listing handle having no items gracefully</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>RL-01</strong></td>
+              <td>RL - Resources & Library</td>
+              <td>Resources & Library</td>
+              <td>Verify Resources & Library page displays all 4 categories</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RL-02</strong></td>
+              <td>RL - Resources & Library</td>
+              <td>Resources & Library</td>
+              <td>Verify each category lists its documents correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RL-03</strong></td>
+              <td>RL - Resources & Library</td>
+              <td>Resources & Library</td>
+              <td>Verify documents download and open correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>RL-04</strong></td>
+              <td>RL - Resources & Library</td>
+              <td>Resources & Library</td>
+              <td>Verify the Tenders sub-page lists current tenders with correct details</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RL-05</strong></td>
+              <td>RL - Resources & Library</td>
+              <td>Resources & Library</td>
+              <td>Verify the Circulars sub-page lists departmental circulars correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>RL-06</strong></td>
+              <td>RL - Resources & Library</td>
+              <td>Resources & Library</td>
+              <td>Verify any search or filter on Resources narrows results correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>RL-07</strong></td>
+              <td>RL - Resources & Library</td>
+              <td>Resources & Library</td>
+              <td>Verify category names and document titles translate correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>RL-08</strong></td>
+              <td>RL - Resources & Library</td>
+              <td>Resources & Library</td>
+              <td>Verify a category with no documents shows an appropriate empty state</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>RL-09</strong></td>
+              <td>RL - Resources & Library</td>
+              <td>Resources & Library</td>
+              <td>Policies - Recruitment Policy</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>RL-010</strong></td>
+              <td>RL - Resources & Library</td>
+              <td>Resources & Library</td>
+              <td>Policies - Citizen Charter</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>RL-011</strong></td>
+              <td>RL - Resources & Library</td>
+              <td>Resources & Library</td>
+              <td>Policies - Right to Information Policy</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>RL-012</strong></td>
+              <td>RL - Resources & Library</td>
+              <td>Resources & Library</td>
+              <td>Policies - Administrative Information Policy</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>RL-013</strong></td>
+              <td>RL - Resources & Library</td>
+              <td>Resources & Library</td>
+              <td>Policies - Social Media Policy</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>RL-014</strong></td>
+              <td>RL - Resources & Library</td>
+              <td>Resources & Library</td>
+              <td>Policies - PIDPI Policy for Circulation</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>SS-01</strong></td>
+              <td>SS - State Subsites</td>
+              <td>State Subsites</td>
+              <td>Verify a state subsite loads correctly via its URL</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>SS-02</strong></td>
+              <td>SS - State Subsites</td>
+              <td>State Subsites</td>
+              <td>Verify the Pension section displays description and case status date correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>SS-03</strong></td>
+              <td>SS - State Subsites</td>
+              <td>State Subsites</td>
+              <td>Verify the GPF section displays correct information</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>SS-04</strong></td>
+              <td>SS - State Subsites</td>
+              <td>State Subsites</td>
+              <td>Verify the Monthly Key Indicators data displays correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>SS-05</strong></td>
+              <td>SS - State Subsites</td>
+              <td>State Subsites</td>
+              <td>Verify Appropriation Accounts data is correct for the selected state</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>SS-06</strong></td>
+              <td>SS - State Subsites</td>
+              <td>State Subsites</td>
+              <td>Verify the Finance Account data displays correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>SS-07</strong></td>
+              <td>SS - State Subsites</td>
+              <td>State Subsites</td>
+              <td>Verify the Accounts at a Glance summary is correct</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>SS-08</strong></td>
+              <td>SS - State Subsites</td>
+              <td>State Subsites</td>
+              <td>Verify Quick Links section items navigate/open correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>SS-09</strong></td>
+              <td>SS - State Subsites</td>
+              <td>State Subsites</td>
+              <td>Verify What's New lists latest tenders/announcements sorted by date</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>SS-10</strong></td>
+              <td>SS - State Subsites</td>
+              <td>State Subsites</td>
+              <td>Verify subsite structure is consistent across multiple states</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>SS-11</strong></td>
+              <td>SS - State Subsites</td>
+              <td>State Subsites</td>
+              <td>Verify all state subsite sections translate correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>SS-12</strong></td>
+              <td>SS - State Subsites</td>
+              <td>State Subsites</td>
+              <td>Verify navigating to a non-existent state slug is handled gracefully</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>UX-01</strong></td>
+              <td>UX - UI-UX & Shared Components</td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify the redesigned core Header displays all intended elements</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>UX-02</strong></td>
+              <td>UX - UI-UX & Shared Components</td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify addon/Header.tsx parity with the core Header where the addon variant is used</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>UX-03</strong></td>
+              <td>UX - UI-UX & Shared Components</td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify the 5 main navigation items appear in the correct order with correct sub-menus</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>UX-04</strong></td>
+              <td>UX - UI-UX & Shared Components</td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify addon/Menu.tsx enhanced multi-level navigation matches core Menu behaviour</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>UX-05</strong></td>
+              <td>UX - UI-UX & Shared Components</td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify Footer displays correct contact details and external links</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>UX-06</strong></td>
+              <td>UX - UI-UX & Shared Components</td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify addon/Footer.tsx parity with the core Footer</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>UX-07</strong></td>
+              <td>UX - UI-UX & Shared Components</td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify breadcrumb trails are present and accurate on nested pages</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>UX-08</strong></td>
+              <td>UX - UI-UX & Shared Components</td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify addon/Breadcrumb.tsx configurable labels render correctly where used</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>UX-09</strong></td>
+              <td>UX - UI-UX & Shared Components</td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify consistent spacing, typography, colour and iconography across redesigned pages</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>UX-10</strong></td>
+              <td>UX - UI-UX & Shared Components</td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify header scroll behaviour does not obscure content</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>UX-11</strong></td>
+              <td>UX - UI-UX & Shared Components</td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify the mobile hamburger menu opens/closes and exposes all navigation items</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>UX-12</strong></td>
+              <td>UX - UI-UX & Shared Components</td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify the EN/HI toggle is consistently placed and styled across all Header instances</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>UX-13</strong></td>
+              <td>UX - UI-UX & Shared Components</td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify redesigned pages match the approved design reference</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>UX-14</strong></td>
+              <td>UX - UI-UX & Shared Components</td>
+              <td>UI-UX & Shared Components</td>
+              <td>Verify admin and state-subsite routes correctly skip the public Header/Footer</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>BL-01</strong></td>
+              <td>BL - Bilingual (i18n)</td>
+              <td>Bilingual (i18n)</td>
+              <td>Verify a language toggle is present and functional on every public page</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>BL-02</strong></td>
+              <td>BL - Bilingual (i18n)</td>
+              <td>Bilingual (i18n)</td>
+              <td>Verify the selected language persists when navigating between pages</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>BL-03</strong></td>
+              <td>BL - Bilingual (i18n)</td>
+              <td>Bilingual (i18n)</td>
+              <td>Verify Hindi text renders correctly using Noto Sans</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>BL-04</strong></td>
+              <td>BL - Bilingual (i18n)</td>
+              <td>Bilingual (i18n)</td>
+              <td>Verify longer Hindi translations do not break page layout</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>BL-05</strong></td>
+              <td>BL - Bilingual (i18n)</td>
+              <td>Bilingual (i18n)</td>
+              <td>Verify no untranslated English text appears when in Hindi mode</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>BL-06</strong></td>
+              <td>BL - Bilingual (i18n)</td>
+              <td>Bilingual (i18n)</td>
+              <td>Verify Admin CMS bilingual fields save and render correctly in both languages</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>BL-07</strong></td>
+              <td>BL - Bilingual (i18n)</td>
+              <td>Bilingual (i18n)</td>
+              <td>Verify dates and numbers display in an appropriate localized format</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>BL-08</strong></td>
+              <td>BL - Bilingual (i18n)</td>
+              <td>Bilingual (i18n)</td>
+              <td>Verify refreshing the browser in Hindi mode does not break the page</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>BL-09</strong></td>
+              <td>BL - Bilingual (i18n)</td>
+              <td>Bilingual (i18n)</td>
+              <td>Verify the language toggle still functions when accessed via a deep link</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>BL-10</strong></td>
+              <td>BL - Bilingual (i18n)</td>
+              <td>Bilingual (i18n)</td>
+              <td>Verify search functionality returns correct results for Hindi keywords, if supported</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AA-01</strong></td>
+              <td>AA - Admin - Authentication</td>
+              <td>Admin - Authentication</td>
+              <td>Verify login with valid admin credentials succeeds</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AA-02</strong></td>
+              <td>AA - Admin - Authentication</td>
+              <td>Admin - Authentication</td>
+              <td>Verify login with an incorrect password is rejected</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AA-03</strong></td>
+              <td>AA - Admin - Authentication</td>
+              <td>Admin - Authentication</td>
+              <td>Verify whether the documented default credentials are still active</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AA-04</strong></td>
+              <td>AA - Admin - Authentication</td>
+              <td>Admin - Authentication</td>
+              <td>Verify the admin session expires after 8 hours</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AA-05</strong></td>
+              <td>AA - Admin - Authentication</td>
+              <td>Admin - Authentication</td>
+              <td>Verify the JWT does not expose sensitive data beyond documented claims</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AA-06</strong></td>
+              <td>AA - Admin - Authentication</td>
+              <td>Admin - Authentication</td>
+              <td>Verify admin routes redirect unauthenticated users to login</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AA-07</strong></td>
+              <td>AA - Admin - Authentication</td>
+              <td>Admin - Authentication</td>
+              <td>Verify logout terminates the session correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AA-08</strong></td>
+              <td>AA - Admin - Authentication</td>
+              <td>Admin - Authentication</td>
+              <td>Verify the login form handles empty/invalid input gracefully</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AA-09</strong></td>
+              <td>AA - Admin - Authentication</td>
+              <td>Admin - Authentication</td>
+              <td>Verify whether repeated failed logins are rate-limited or locked out</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AA-10</strong></td>
+              <td>AA - Admin - Authentication</td>
+              <td>Admin - Authentication</td>
+              <td>Verify the login page toggles language correctly, if supported</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AD-01</strong></td>
+              <td>AD - Admin - Dashboard</td>
+              <td>Admin - Dashboard</td>
+              <td>Verify the Dashboard displays a personalised welcome greeting per the Figma design</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AD-02</strong></td>
+              <td>AD - Admin - Dashboard</td>
+              <td>Admin - Dashboard</td>
+              <td>Verify the Pending Complaints KPI card matches the Figma design and shows an accurate count</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AD-03</strong></td>
+              <td>AD - Admin - Dashboard</td>
+              <td>Admin - Dashboard</td>
+              <td>Verify the Pending Content Approvals KPI card matches the Figma design and shows an accurate count</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AD-04</strong></td>
+              <td>AD - Admin - Dashboard</td>
+              <td>Admin - Dashboard</td>
+              <td>Verify the Upcoming Training KPI card matches the Figma design and shows an accurate count</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AD-05</strong></td>
+              <td>AD - Admin - Dashboard</td>
+              <td>Admin - Dashboard</td>
+              <td>Verify the four Quick Actions match the Figma design and each opens the correct create form</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AD-06</strong></td>
+              <td>AD - Admin - Dashboard</td>
+              <td>Admin - Dashboard</td>
+              <td>Verify the Recent Audit Reports panel matches the Figma design and lists accurate data</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AD-07</strong></td>
+              <td>AD - Admin - Dashboard</td>
+              <td>Admin - Dashboard</td>
+              <td>Verify the Recent User Activity panel matches the Figma design and lists accurate data</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AD-08</strong></td>
+              <td>AD - Admin - Dashboard</td>
+              <td>Admin - Dashboard</td>
+              <td>Verify the Recent Audit Reports and Recent User Activity panels handle an empty state gracefully</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AD-09</strong></td>
+              <td>AD - Admin - Dashboard</td>
+              <td>Admin - Dashboard</td>
+              <td>Verify the Dashboard sidebar matches the Figma nav taxonomy</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AD-10</strong></td>
+              <td>AD - Admin - Dashboard</td>
+              <td>Admin - Dashboard</td>
+              <td>Verify the Dashboard uses the approved brand colours</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AD-11</strong></td>
+              <td>AD - Admin - Dashboard</td>
+              <td>Admin - Dashboard</td>
+              <td>Verify the dashboard loads promptly even with large underlying tables</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AD-12</strong></td>
+              <td>AD - Admin - Dashboard</td>
+              <td>Admin - Dashboard</td>
+              <td>Verify the dashboard layout adapts on smaller viewports</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AD-13</strong></td>
+              <td>AD - Admin - Dashboard</td>
+              <td>Admin - Dashboard</td>
+              <td>Verify only authenticated admins can view the dashboard</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AC-01</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify a new record can be created with all mandatory fields</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AC-02</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify the DataTable displays correct columns and data types</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AC-03</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify an existing record can be edited and changes persist</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AC-04</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify a record can be deleted and is removed from the list</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AC-05</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify required-field validation prevents incomplete submissions</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AC-06</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify every documented form field type renders and behaves correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AC-07</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify the configured search column filters records correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AC-08</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify Admin changes to a report reflect on the public Reports page</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AC-09</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify a CMS page created/edited in Admin renders correctly at its public slug</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AC-10</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify Admin-created events/news appear on public listings</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AC-11</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify a new hierarchical menu item reflects in public navigation</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AC-12</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify an officer record change reflects in the public org chart</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AC-13</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify an admin user can be created with a role</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AC-14</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify a record with English and Hindi field variants saves and renders correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AC-15</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify pagination and column sorting work correctly for a large table</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AC-16</strong></td>
+              <td>AC - Admin - CRUD Modules</td>
+              <td>Admin - CRUD Modules</td>
+              <td>Verify no orphaned references remain after deleting a referenced record</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AF-01</strong></td>
+              <td>AF - Admin - File Upload</td>
+              <td>Admin - File Upload</td>
+              <td>Verify a valid image uploads and displays correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AF-02</strong></td>
+              <td>AF - Admin - File Upload</td>
+              <td>Admin - File Upload</td>
+              <td>Verify a valid document uploads and its link works</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AF-03</strong></td>
+              <td>AF - Admin - File Upload</td>
+              <td>Admin - File Upload</td>
+              <td>Verify disallowed file types are rejected</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AF-04</strong></td>
+              <td>AF - Admin - File Upload</td>
+              <td>Admin - File Upload</td>
+              <td>Verify files exceeding the size limit are rejected gracefully</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AF-05</strong></td>
+              <td>AF - Admin - File Upload</td>
+              <td>Admin - File Upload</td>
+              <td>Verify replacing an existing file updates the reference correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AF-06</strong></td>
+              <td>AF - Admin - File Upload</td>
+              <td>Admin - File Upload</td>
+              <td>Verify the upload widget provides clear progress/success/error feedback</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AF-07</strong></td>
+              <td>AF - Admin - File Upload</td>
+              <td>Admin - File Upload</td>
+              <td>Verify file type restrictions are enforced server-side, not only client-side</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AF-08</strong></td>
+              <td>AF - Admin - File Upload</td>
+              <td>Admin - File Upload</td>
+              <td>Verify deleting a record with an attached file handles the file appropriately</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AF-09</strong></td>
+              <td>AF - Admin - File Upload</td>
+              <td>Admin - File Upload</td>
+              <td>Verify uploading two files with the same name does not cause unintended overwrite</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AF-10</strong></td>
+              <td>AF - Admin - File Upload</td>
+              <td>Admin - File Upload</td>
+              <td>Verify upload behaviour under simulated slow network conditions</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AL-01</strong></td>
+              <td>AL - Admin - Audit Log</td>
+              <td>Admin - Audit Log</td>
+              <td>Verify a CREATE action is logged correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AL-02</strong></td>
+              <td>AL - Admin - Audit Log</td>
+              <td>Admin - Audit Log</td>
+              <td>Verify an UPDATE action captures old and new data correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AL-03</strong></td>
+              <td>AL - Admin - Audit Log</td>
+              <td>Admin - Audit Log</td>
+              <td>Verify a DELETE action captures the deleted record's prior state</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AL-04</strong></td>
+              <td>AL - Admin - Audit Log</td>
+              <td>Admin - Audit Log</td>
+              <td>Verify a LOGIN action is recorded</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AL-05</strong></td>
+              <td>AL - Admin - Audit Log</td>
+              <td>Admin - Audit Log</td>
+              <td>Verify the ip_address field is populated correctly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AL-06</strong></td>
+              <td>AL - Admin - Audit Log</td>
+              <td>Admin - Audit Log</td>
+              <td>Verify the audit-log viewer filters/sorts entries correctly</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
+            </tr><tr>
+              <td><strong>AL-07</strong></td>
+              <td>AL - Admin - Audit Log</td>
+              <td>Admin - Audit Log</td>
+              <td>Verify audit log entries cannot be edited or deleted via the UI</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>AL-08</strong></td>
+              <td>AL - Admin - Audit Log</td>
+              <td>Admin - Audit Log</td>
+              <td>Verify the audit log viewer performs well as entries accumulate</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-shipped">SHIPPED</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-01</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Verify all /api/admin/* endpoints reject unauthenticated requests</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-02</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Verify DB credentials/config are never exposed to the client</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-03</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Verify script/HTML injected into a rich-text field is sanitized on render</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-04</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Verify upload restrictions are enforced server-side, independent of the UI</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-05</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Verify whether the deployed environment enforces HTTPS</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-06</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Measure /api/reports response time against the large dataset</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-07</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Measure load time for state/combined accounts pages</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-08</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Verify concurrent CRUD operations do not corrupt data or audit logs</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-09</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Capture Core Web Vitals for key pages</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-10</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Verify all interactive elements are reachable via keyboard alone</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-11</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Verify text/background contrast meets WCAG 2.1 AA</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-12</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Verify meaningful alt attributes exist for informative images</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-13</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Verify semantic landmarks and ARIA labelling support assistive technology</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-14</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Verify core journeys work across major browsers</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-15</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Verify automatic SQLite fallback when PostgreSQL is unreachable</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>NF-16</strong></td>
+              <td>NF - Non-Functional</td>
+              <td>Non-Functional</td>
+              <td>Verify /api and /api/v1 remain consistent under load</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-01</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the Home Page > Banners admin screen matches the Figma design exactly</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-02</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the Home Page > Quick Link Cards admin screen exists and follows the Figma list/CRUD pattern</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-03</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the Home Page > Who We Are admin screen exists and follows the Figma list/CRUD pattern</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-04</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the Home Page > Statistics admin screen exists and follows the Figma list/CRUD pattern</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-05</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the Home Page > CAG Message admin screen exists and follows the Figma list/CRUD pattern</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-06</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the Reports admin screen exposes exactly the filter fields shown in Figma</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-07</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the Reports admin table columns and row actions match Figma</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-08</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the Our Presence admin screen matches its Figma frame</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-09</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the Global Relations admin screen matches its Figma frame</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-10</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the Resources admin screen matches its Figma frame</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-11</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the Careers & Engagement admin screen matches its Figma frame</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-12</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the About Us admin screen matches its Figma frame</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-13</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the News & Media admin screen matches its Figma frame</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-14</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the Contact admin screen matches its Figma frame and reconcile with the Dashboard's Pending Complaints KPI</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-15</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the Menu Management admin screen matches Figma and changes reflect on the public site</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-16</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the User Management / Administration admin screen matches its Figma frame</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-17</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the full sidebar nav taxonomy is identical across every admin screen</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-18</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the language selector and admin profile control are consistent across every admin screen</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-19</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify Active/Inactive status badges use consistent colours across every module list screen</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-20</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Verify the Language (EN/HI) column is present and accurate on every module list screen</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>FP-21</strong></td>
+              <td>FP - Figma Design Parity</td>
+              <td>Figma Design Parity</td>
+              <td>Confirm every Figma nav item has a corresponding, reachable screen in the deployed build</td>
+              <td><span class="badge badge-manual">N</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-01</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify the home data endpoint returns the expected payload shape</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-02</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify the news list endpoint returns all news items</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-03</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify the events list endpoint returns all events</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-04</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify page/pageSize parameters return correct pagination metadata</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-05</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify individual and combined filters return correctly scoped results</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-06</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify dynamic filter options reflect actual data</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-07</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify single-report retrieval and 404 handling</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-08</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify the accounts portal summary endpoint</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-09</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify paginated list and single-record retrieval for state accounts</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-10</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify paginated list and single-record retrieval for combined accounts</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-11</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify CMS page retrieval by slug and by numeric ID</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-12</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify state list and single state subsite retrieval</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-13</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify the hierarchical tree structure in the API response</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-14</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify the former CAGs gallery endpoint</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-15</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify the health check endpoint</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-16</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify identical responses from both mount points for the same request</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-17</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify the admin login endpoint returns correct success/failure responses</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-18</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify generic CRUD endpoints require a valid token</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-19</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify each documented option type returns correct dropdown data</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr><tr>
+              <td><strong>API-20</strong></td>
+              <td>API - API Testing</td>
+              <td>API Testing</td>
+              <td>Verify the upload endpoint returns correct success/error responses</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+              <td><span class="badge badge-manual">NO</span></td>
+            </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TAB: Defects -->
+  <div id="tab-defects" class="tab-content">
+    <div class="quality-alert">
+      <strong>Data Quality Finding (§E.2 #6):</strong> All 15 defects (D-01 to D-15) are in <code>OPEN</code> status, but the <strong>Severity column is completely blank</strong> on all 15 defects in the workbook. The release gate ("zero open Critical/High defects") cannot be evaluated until QA rates these defects.
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Defect ID</th>
+          <th>Module</th>
+          <th>Summary</th>
+          <th>Status</th>
+          <th>Priority</th>
+          <th>Severity (Data Quality Issue)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+              <td><span class="badge badge-defect">D-01</span></td>
+              <td>Our Presence</td>
+              <td>Our Presence' side panel subcategories are not translated when language is toggled to Hindi</td>
+              <td><strong>OPEN</strong></td>
+              <td>Medium</td>
+              <td style="color: #f87171;"><em>[BLANK in workbook]</em></td>
+            </tr><tr>
+              <td><span class="badge badge-defect">D-02</span></td>
+              <td>Our Presence</td>
+              <td>Keyboard navigation skips main navbar links and lands directly on 'Citizen Charter'</td>
+              <td><strong>OPEN</strong></td>
+              <td>Medium</td>
+              <td style="color: #f87171;"><em>[BLANK in workbook]</em></td>
+            </tr><tr>
+              <td><span class="badge badge-defect">D-03</span></td>
+              <td>About Us</td>
+              <td>Displayed only 9 categories instead of 11,need to clarify</td>
+              <td><strong>OPEN</strong></td>
+              <td>Medium</td>
+              <td style="color: #f87171;"><em>[BLANK in workbook]</em></td>
+            </tr><tr>
+              <td><span class="badge badge-defect">D-04</span></td>
+              <td>About Us</td>
+              <td>Name and tenure are displayed, but 7 former CAG photos are missing in both website and figma design - need to clarify</td>
+              <td><strong>OPEN</strong></td>
+              <td>Medium</td>
+              <td style="color: #f87171;"><em>[BLANK in workbook]</em></td>
+            </tr><tr>
+              <td><span class="badge badge-defect">D-05</span></td>
+              <td>About Us</td>
+              <td>Hindi translation is incomplete; English text is displayed on the Duties & Powers Act and Constitutional Provisions pages.</td>
+              <td><strong>OPEN</strong></td>
+              <td>Medium</td>
+              <td style="color: #f87171;"><em>[BLANK in workbook]</em></td>
+            </tr><tr>
+              <td><span class="badge badge-defect">D-06</span></td>
+              <td>About Us</td>
+              <td>Tooltip gets cut off on the left side for all left-aligned nodes in the Organisation Chart; text is not readable.</td>
+              <td><strong>OPEN</strong></td>
+              <td>Medium</td>
+              <td style="color: #f87171;"><em>[BLANK in workbook]</em></td>
+            </tr><tr>
+              <td><span class="badge badge-defect">D-07</span></td>
+              <td>Home Page</td>
+              <td>Homepage content is not fully translated into Hindi. Some sections/text remain in English after switching to Hindi.</td>
+              <td><strong>OPEN</strong></td>
+              <td>Medium</td>
+              <td style="color: #f87171;"><em>[BLANK in workbook]</em></td>
+            </tr><tr>
+              <td><span class="badge badge-defect">D-08</span></td>
+              <td>Home Page</td>
+              <td>Broken links or assets are found on the homepage</td>
+              <td><strong>OPEN</strong></td>
+              <td>Medium</td>
+              <td style="color: #f87171;"><em>[BLANK in workbook]</em></td>
+            </tr><tr>
+              <td><span class="badge badge-defect">D-09</span></td>
+              <td>Reports</td>
+              <td>Report Download button opens the PDF in the browser instead of downloading the file</td>
+              <td><strong>OPEN</strong></td>
+              <td>Medium</td>
+              <td style="color: #f87171;"><em>[BLANK in workbook]</em></td>
+            </tr><tr>
+              <td><span class="badge badge-defect">D-10</span></td>
+              <td>Admin-Authentication</td>
+              <td>Invalid password is not rejected during admin login</td>
+              <td><strong>OPEN</strong></td>
+              <td>Medium</td>
+              <td style="color: #f87171;"><em>[BLANK in workbook]</em></td>
+            </tr><tr>
+              <td><span class="badge badge-defect">D-11</span></td>
+              <td>Resource and Library</td>
+              <td>Resource and library ---> Tenders subsite</td>
+              <td><strong>OPEN</strong></td>
+              <td>MEDIUM</td>
+              <td style="color: #f87171;"><em>[BLANK in workbook]</em></td>
+            </tr><tr>
+              <td><span class="badge badge-defect">D-12</span></td>
+              <td>Resource and Library</td>
+              <td>Resource and library ---> Circulars subsite</td>
+              <td><strong>OPEN</strong></td>
+              <td>MEDIUM</td>
+              <td style="color: #f87171;"><em>[BLANK in workbook]</em></td>
+            </tr><tr>
+              <td><span class="badge badge-defect">D-13</span></td>
+              <td>Resource and Library</td>
+              <td>Resource and library ---> Search Bar</td>
+              <td><strong>OPEN</strong></td>
+              <td>LOW</td>
+              <td style="color: #f87171;"><em>[BLANK in workbook]</em></td>
+            </tr><tr>
+              <td><span class="badge badge-defect">D-14</span></td>
+              <td>Resource and Library</td>
+              <td>Resource and library ---> Bilingual Content</td>
+              <td><strong>OPEN</strong></td>
+              <td>MEDIUM</td>
+              <td style="color: #f87171;"><em>[BLANK in workbook]</em></td>
+            </tr><tr>
+              <td><span class="badge badge-defect">D-15</span></td>
+              <td>Resource and Library</td>
+              <td>Resource and library ---> Empty Category State</td>
+              <td><strong>OPEN</strong></td>
+              <td>LOW</td>
+              <td style="color: #f87171;"><em>[BLANK in workbook]</em></td>
+            </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TAB: Framework Checks -->
+  <div id="tab-framework" class="tab-content">
+    <div class="quality-alert">
+      <strong>Framework-Originated Checks (§E.2 #5):</strong> Specialist suite checks (@VIS-xx, @A11Y-xx, @CRW-xx) are tracked independently from workbook functional test cases and excluded from the candidate denominator.
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Check ID</th>
+          <th>Type</th>
+          <th>Title / Definition</th>
+          <th>Spec File</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function openTab(evt, tabName) {
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach(c => c.classList.remove('active'));
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(b => b.classList.remove('active'));
+      document.getElementById(tabName).classList.add('active');
+      evt.currentTarget.classList.add('active');
+    }
+  </script>
+</body>
+</html>

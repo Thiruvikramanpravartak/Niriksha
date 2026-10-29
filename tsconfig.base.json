@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "baseUrl": ".",
+    "paths": {
+      "@qa/core": ["packages/core/src/index.ts"],
+      "@pages/*": ["projects/cag-v2/src/pages/*"],
+      "@components/*": ["projects/cag-v2/src/components/*"],
+      "@api/*": ["projects/cag-v2/src/api/*"],
+      "@data/*": ["projects/cag-v2/src/data/*"]
+    }
+  }
+}
