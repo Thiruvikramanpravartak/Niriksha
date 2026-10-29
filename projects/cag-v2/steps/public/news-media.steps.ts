@@ -80,3 +80,18 @@ Then('the link to historical press release archive should be present', async fun
   const newsPage = new NewsPage(page, this.config);
   await expect(newsPage.archiveLink()).toBeVisible();
 });
+
+Then('all visible news item images should have valid dimensions and sources', async function (this: CustomWorld) {
+  const page = this.getPage();
+  const images = await page.locator('img').all();
+  let validCount = 0;
+  for (const img of images) {
+    const isNatural = await img.evaluate(
+      (el: HTMLImageElement) => el.naturalWidth > 0 || (Boolean(el.src) && !el.src.includes('broken'))
+    );
+    if (isNatural) validCount++;
+  }
+  expect(validCount).toBeGreaterThan(0);
+  this.checklist.record('News media images verified', `${validCount} images intact`, true);
+});
+

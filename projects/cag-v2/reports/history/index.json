@@ -1,5 +1,19 @@
 [
   {
+    "id": "RUN-20261029_195904",
+    "timestamp": "20261029_195904",
+    "dateStr": "2026-10-29 14:29:04",
+    "env": "e2e",
+    "targetUrl": "http://13.202.245.81:3001",
+    "totalScenarios": 122,
+    "passedScenarios": 111,
+    "failedScenarios": 1,
+    "skippedScenarios": 10,
+    "passRate": "91.0%",
+    "htmlReport": "history/cucumber-report_20261029_195904_e2e.html",
+    "jsonReport": "history/cucumber-report_20261029_195904_e2e.json"
+  },
+  {
     "id": "RUN-20261029_170850",
     "timestamp": "20261029_170850",
     "dateStr": "2026-10-29 11:38:50",

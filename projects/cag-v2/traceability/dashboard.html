@@ -157,8 +157,8 @@
     </div>
     <div class="stat-card">
       <div class="title">Automated, Awaiting Dev</div>
-      <div class="value val-purple">47</div>
-      <div class="desc">Written + @pending + Excluded from CI (24 candidates)</div>
+      <div class="value val-purple">75</div>
+      <div class="desc">Written + @pending + Excluded from CI (52 candidates)</div>
     </div>
     <div class="stat-card">
       <div class="title">Backlog (True QA Queue)</div>
@@ -172,8 +172,8 @@
     </div>
     <div class="stat-card">
       <div class="title">Coverage vs All Cand.</div>
-      <div class="value val-primary">60%</div>
-      <div class="desc">65 of 109 candidates (Active: 38%)</div>
+      <div class="value val-primary">85%</div>
+      <div class="desc">93 of 109 candidates (Active: 38%)</div>
     </div>
     <div class="stat-card">
       <div class="title">Open Defects</div>
@@ -190,7 +190,7 @@
   <div class="tabs">
     <button class="tab-btn active" onclick="openTab(event, 'tab-summary')">Summary Derivations</button>
     <button class="tab-btn" onclick="openTab(event, 'tab-active')">Automated & Active (49)</button>
-    <button class="tab-btn" onclick="openTab(event, 'tab-awaiting')">Automated, Awaiting Dev (47)</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-awaiting')">Automated, Awaiting Dev (75)</button>
     <button class="tab-btn" onclick="openTab(event, 'tab-backlog')">Backlog (0)</button>
     <button class="tab-btn" onclick="openTab(event, 'tab-all')">All Test Cases (253)</button>
     <button class="tab-btn" onclick="openTab(event, 'tab-defects')">Defects (15)</button>
@@ -828,6 +828,30 @@
               <td><code>features/public/news-media.feature</code></td>
               <td><code>@TC:NM-06 @smoke @priority:high @type:functional</code></td>
             </tr><tr>
+              <td><strong>NM-07</strong></td>
+              <td>News & Media</td>
+              <td>Verify searching the News & Media list returns matching items</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/news-media.feature</code></td>
+              <td><code>@TC:NM-07 @smoke @priority:high @type:functional</code></td>
+            </tr><tr>
+              <td><strong>NM-08</strong></td>
+              <td>News & Media</td>
+              <td>Verify news items can be sorted by date and the Rows-per-page control works</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/news-media.feature</code></td>
+              <td><code>@TC:NM-08 @regression @priority:medium @type:functional</code></td>
+            </tr><tr>
+              <td><strong>NM-10</strong></td>
+              <td>News & Media</td>
+              <td>Verify published news items have no broken links or missing images</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/public/news-media.feature</code></td>
+              <td><code>@TC:NM-10 @regression @priority:medium @type:functional</code></td>
+            </tr><tr>
               <td><strong>SS-01</strong></td>
               <td>State Subsites</td>
               <td>Verify a state subsite loads correctly via its URL</td>
@@ -1115,6 +1139,206 @@
               <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
               <td><code>features/admin/crud.feature</code></td>
               <td><code>@TC:AC-15 @regression @priority:medium @type:functional</code></td>
+            </tr><tr>
+              <td><strong>NF-01</strong></td>
+              <td>Non-Functional</td>
+              <td>Verify all /api/admin/* endpoints reject unauthenticated requests</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/shared/non-functional.feature</code></td>
+              <td><code>@non-functional @regression @module:non-functional @sheet:NF @area:shared @TC:NF-01 @smoke @priority:high @type:security</code></td>
+            </tr><tr>
+              <td><strong>NF-11</strong></td>
+              <td>Non-Functional</td>
+              <td>Verify text/background contrast meets WCAG 2.1 AA</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/shared/non-functional.feature</code></td>
+              <td><code>@TC:NF-11 @regression @priority:medium @type:a11y</code></td>
+            </tr><tr>
+              <td><strong>NF-12</strong></td>
+              <td>Non-Functional</td>
+              <td>Verify meaningful alt attributes exist for informative images</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/shared/non-functional.feature</code></td>
+              <td><code>@TC:NF-12 @smoke @priority:high @type:a11y</code></td>
+            </tr><tr>
+              <td><strong>NF-13</strong></td>
+              <td>Non-Functional</td>
+              <td>Verify semantic landmarks and ARIA labelling support assistive technology</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/shared/non-functional.feature</code></td>
+              <td><code>@TC:NF-13 @regression @priority:high @type:a11y</code></td>
+            </tr><tr>
+              <td><strong>FP-17</strong></td>
+              <td>Figma Design Parity</td>
+              <td>Verify the full sidebar nav taxonomy is identical across every admin screen</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/figma-parity.feature</code></td>
+              <td><code>@ui @regression @module:figma-parity @sheet:FP @area:admin @TC:FP-17 @smoke @priority:high @type:ui</code></td>
+            </tr><tr>
+              <td><strong>FP-18</strong></td>
+              <td>Figma Design Parity</td>
+              <td>Verify the language selector and admin profile control are consistent across every admin screen</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/figma-parity.feature</code></td>
+              <td><code>@TC:FP-18 @regression @priority:medium @type:ui</code></td>
+            </tr><tr>
+              <td><strong>FP-19</strong></td>
+              <td>Figma Design Parity</td>
+              <td>Verify Active/Inactive status badges use consistent colours across every module list screen</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/figma-parity.feature</code></td>
+              <td><code>@TC:FP-19 @regression @priority:medium @type:ui</code></td>
+            </tr><tr>
+              <td><strong>FP-20</strong></td>
+              <td>Figma Design Parity</td>
+              <td>Verify the Language (EN/HI) column is present and accurate on every module list screen</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/admin/figma-parity.feature</code></td>
+              <td><code>@TC:FP-20 @regression @priority:medium @type:ui</code></td>
+            </tr><tr>
+              <td><strong>API-01</strong></td>
+              <td>API Testing</td>
+              <td>Verify the home data endpoint returns the expected payload shape</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@api @regression @module:api @sheet:API @area:api @TC:API-01 @smoke @priority:high @type:api</code></td>
+            </tr><tr>
+              <td><strong>API-02</strong></td>
+              <td>API Testing</td>
+              <td>Verify the news list endpoint returns all news items</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-02 @regression @priority:high @type:api</code></td>
+            </tr><tr>
+              <td><strong>API-03</strong></td>
+              <td>API Testing</td>
+              <td>Verify the events list endpoint returns all events</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-03 @regression @priority:medium @type:api</code></td>
+            </tr><tr>
+              <td><strong>API-04</strong></td>
+              <td>API Testing</td>
+              <td>Verify page/pageSize parameters return correct pagination metadata</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-04 @smoke @priority:high @type:api</code></td>
+            </tr><tr>
+              <td><strong>API-05</strong></td>
+              <td>API Testing</td>
+              <td>Verify individual and combined filters return correctly scoped results</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-05 @regression @priority:medium @type:api</code></td>
+            </tr><tr>
+              <td><strong>API-06</strong></td>
+              <td>API Testing</td>
+              <td>Verify dynamic filter options reflect actual data</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-06 @regression @priority:high @type:api</code></td>
+            </tr><tr>
+              <td><strong>API-07</strong></td>
+              <td>API Testing</td>
+              <td>Verify single-report retrieval and 404 handling</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-07 @regression @priority:medium @type:api</code></td>
+            </tr><tr>
+              <td><strong>API-08</strong></td>
+              <td>API Testing</td>
+              <td>Verify the accounts portal summary endpoint</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-08 @regression @priority:medium @type:api</code></td>
+            </tr><tr>
+              <td><strong>API-09</strong></td>
+              <td>API Testing</td>
+              <td>Verify paginated list and single-record retrieval for state accounts</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-09 @regression @priority:medium @type:api</code></td>
+            </tr><tr>
+              <td><strong>API-10</strong></td>
+              <td>API Testing</td>
+              <td>Verify paginated list and single-record retrieval for combined accounts</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-10 @regression @priority:medium @type:api</code></td>
+            </tr><tr>
+              <td><strong>API-12</strong></td>
+              <td>API Testing</td>
+              <td>Verify state list and single state subsite retrieval</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-12 @regression @priority:high @type:api</code></td>
+            </tr><tr>
+              <td><strong>API-13</strong></td>
+              <td>API Testing</td>
+              <td>Verify the hierarchical tree structure in the API response</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-13 @regression @priority:high @type:api</code></td>
+            </tr><tr>
+              <td><strong>API-14</strong></td>
+              <td>API Testing</td>
+              <td>Verify the former CAGs gallery endpoint</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-14 @regression @priority:medium @type:api</code></td>
+            </tr><tr>
+              <td><strong>API-16</strong></td>
+              <td>API Testing</td>
+              <td>Verify identical responses from both mount points for the same request</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-16 @regression @priority:medium @type:api</code></td>
+            </tr><tr>
+              <td><strong>API-17</strong></td>
+              <td>API Testing</td>
+              <td>Verify the admin login endpoint returns correct success/failure responses</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-17 @smoke @priority:high @type:security</code></td>
+            </tr><tr>
+              <td><strong>API-18</strong></td>
+              <td>API Testing</td>
+              <td>Verify generic CRUD endpoints require a valid token</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-18 @regression @priority:high @type:security</code></td>
+            </tr><tr>
+              <td><strong>API-19</strong></td>
+              <td>API Testing</td>
+              <td>Verify each documented option type returns correct dropdown data</td>
+              <td><span class="badge badge-cand">Y</span></td>
+              <td><span class="badge badge-pending">PENDING FROM DEV</span></td>
+              <td><code>features/api/rest-endpoints.feature</code></td>
+              <td><code>@TC:API-19 @regression @priority:medium @type:security</code></td>
             </tr>
       </tbody>
     </table>
@@ -1835,7 +2059,7 @@
               <td>Verify searching the News & Media list returns matching items</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>NM-08</strong></td>
               <td>NM - News & Media</td>
@@ -1843,7 +2067,7 @@
               <td>Verify news items can be sorted by date and the Rows-per-page control works</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>NM-09</strong></td>
               <td>NM - News & Media</td>
@@ -1859,7 +2083,7 @@
               <td>Verify published news items have no broken links or missing images</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>NM-11</strong></td>
               <td>NM - News & Media</td>
@@ -2731,7 +2955,7 @@
               <td>Verify all /api/admin/* endpoints reject unauthenticated requests</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>NF-02</strong></td>
               <td>NF - Non-Functional</td>
@@ -2811,7 +3035,7 @@
               <td>Verify text/background contrast meets WCAG 2.1 AA</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>NF-12</strong></td>
               <td>NF - Non-Functional</td>
@@ -2819,7 +3043,7 @@
               <td>Verify meaningful alt attributes exist for informative images</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>NF-13</strong></td>
               <td>NF - Non-Functional</td>
@@ -2827,7 +3051,7 @@
               <td>Verify semantic landmarks and ARIA labelling support assistive technology</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>NF-14</strong></td>
               <td>NF - Non-Functional</td>
@@ -2987,7 +3211,7 @@
               <td>Verify the full sidebar nav taxonomy is identical across every admin screen</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>FP-18</strong></td>
               <td>FP - Figma Design Parity</td>
@@ -2995,7 +3219,7 @@
               <td>Verify the language selector and admin profile control are consistent across every admin screen</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>FP-19</strong></td>
               <td>FP - Figma Design Parity</td>
@@ -3003,7 +3227,7 @@
               <td>Verify Active/Inactive status badges use consistent colours across every module list screen</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>FP-20</strong></td>
               <td>FP - Figma Design Parity</td>
@@ -3011,7 +3235,7 @@
               <td>Verify the Language (EN/HI) column is present and accurate on every module list screen</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>FP-21</strong></td>
               <td>FP - Figma Design Parity</td>
@@ -3027,7 +3251,7 @@
               <td>Verify the home data endpoint returns the expected payload shape</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-02</strong></td>
               <td>API - API Testing</td>
@@ -3035,7 +3259,7 @@
               <td>Verify the news list endpoint returns all news items</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-03</strong></td>
               <td>API - API Testing</td>
@@ -3043,7 +3267,7 @@
               <td>Verify the events list endpoint returns all events</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-04</strong></td>
               <td>API - API Testing</td>
@@ -3051,7 +3275,7 @@
               <td>Verify page/pageSize parameters return correct pagination metadata</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-05</strong></td>
               <td>API - API Testing</td>
@@ -3059,7 +3283,7 @@
               <td>Verify individual and combined filters return correctly scoped results</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-06</strong></td>
               <td>API - API Testing</td>
@@ -3067,7 +3291,7 @@
               <td>Verify dynamic filter options reflect actual data</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-07</strong></td>
               <td>API - API Testing</td>
@@ -3075,7 +3299,7 @@
               <td>Verify single-report retrieval and 404 handling</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-08</strong></td>
               <td>API - API Testing</td>
@@ -3083,7 +3307,7 @@
               <td>Verify the accounts portal summary endpoint</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-09</strong></td>
               <td>API - API Testing</td>
@@ -3091,7 +3315,7 @@
               <td>Verify paginated list and single-record retrieval for state accounts</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-10</strong></td>
               <td>API - API Testing</td>
@@ -3099,7 +3323,7 @@
               <td>Verify paginated list and single-record retrieval for combined accounts</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-11</strong></td>
               <td>API - API Testing</td>
@@ -3115,7 +3339,7 @@
               <td>Verify state list and single state subsite retrieval</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-13</strong></td>
               <td>API - API Testing</td>
@@ -3123,7 +3347,7 @@
               <td>Verify the hierarchical tree structure in the API response</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-14</strong></td>
               <td>API - API Testing</td>
@@ -3131,7 +3355,7 @@
               <td>Verify the former CAGs gallery endpoint</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-15</strong></td>
               <td>API - API Testing</td>
@@ -3147,7 +3371,7 @@
               <td>Verify identical responses from both mount points for the same request</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-17</strong></td>
               <td>API - API Testing</td>
@@ -3155,7 +3379,7 @@
               <td>Verify the admin login endpoint returns correct success/failure responses</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-18</strong></td>
               <td>API - API Testing</td>
@@ -3163,7 +3387,7 @@
               <td>Verify generic CRUD endpoints require a valid token</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-19</strong></td>
               <td>API - API Testing</td>
@@ -3171,7 +3395,7 @@
               <td>Verify each documented option type returns correct dropdown data</td>
               <td><span class="badge badge-cand">Y</span></td>
               <td><span class="badge badge-pending">PENDING</span></td>
-              <td><span class="badge badge-manual">NO</span></td>
+              <td><span class="badge badge-shipped">YES</span></td>
             </tr><tr>
               <td><strong>API-20</strong></td>
               <td>API - API Testing</td>

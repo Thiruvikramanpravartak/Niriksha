@@ -51,3 +51,24 @@ Feature: News & Media Portal — Press Communiques and Announcements
       Then the official press release PDF download link should be available
       And no network request on the page returns a 4xx or 5xx status
       And the page records no console errors
+
+  Rule: News archive search, pagination, and media assets integrity
+
+    @TC:NM-07 @smoke @priority:high @type:functional
+    Scenario: [NM-07] Searching news items with title keyword filters matching releases accurately
+      When I search news with keyword "Audit"
+      Then only articles matching "Audit" should remain visible
+      And the news title should be visible
+      And the page records no console errors
+
+    @TC:NM-08 @regression @priority:medium @type:functional
+    Scenario: [NM-08] News list pagination and sorting controls allow chronological ordering
+      Then the news pagination control should be displayed
+      And published news cards should be displayed
+      And the page records no console errors
+
+    @TC:NM-10 @regression @priority:medium @type:functional
+    Scenario: [NM-10] Verifying published news items on the portal displays valid media assets with no broken resources
+      Then all visible news item images should have valid dimensions and sources
+      And no network request on the page returns a 4xx or 5xx status
+      And the page records no console errors
