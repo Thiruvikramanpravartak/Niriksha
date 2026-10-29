@@ -12,7 +12,8 @@
     "validate:features": "tsx scripts/validateFeatures.ts",
     "traceability": "tsx scripts/traceability.ts",
     "check:e2e": "tsx scripts/checkE2eReadiness.ts",
-    "check:uat": "tsx scripts/checkUatReadiness.ts"
+    "check:uat": "tsx scripts/checkUatReadiness.ts",
+    "show:report": "tsx scripts/openReport.ts"
   },
   "dependencies": {
     "@qa/core": "*"

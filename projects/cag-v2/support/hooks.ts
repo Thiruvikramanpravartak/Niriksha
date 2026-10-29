@@ -52,8 +52,17 @@ After(async function (this: CustomWorld, scenario) {
   // 4. Evidence screenshot saving & inline attachment (§J.2, §J.4)
   if (this.page && !this.page.isClosed()) {
     try {
-      const screenshot = await this.page.screenshot({ timeout: 20000, animations: 'disabled' });
-      await this.attach(screenshot, 'image/png');
+      const screenshot = await this.page.screenshot({
+        type: 'jpeg',
+        quality: 70,
+        timeout: 20000,
+        animations: 'disabled',
+      });
+      // Inline screenshot into Cucumber report on failure (or if ATTACH_ALL_SCREENSHOTS is true)
+      // Keeps the HTML report lightweight (~1MB) so GitHub can display it without truncation
+      if (!isPassed || process.env.ATTACH_ALL_SCREENSHOTS === 'true') {
+        await this.attach(screenshot, 'image/jpeg');
+      }
 
       // Write to reports/evidence/<TC-ID>__<pass|fail>__<timestamp>.png
       const reportsDir = path.resolve(__dirname, '../reports');

@@ -50,11 +50,24 @@ When('I attempt to visit the admin dashboard directly', async function (this: Cu
   const dashboard = new DashboardPage(page);
   await dashboard.goto();
 });
+Given('I am authenticated as an administrator', async function (this: CustomWorld) {
+  const page = this.getPage();
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+  const username = process.env.CAG_E2E_ADMIN_USER || 'tthiruvikram_admin';
+  const password = process.env.CAG_E2E_ADMIN_PASSWORD || 'Thiru@123';
+  await loginPage.login(username, password);
+  const dashboard = new DashboardPage(page);
+  await expect(dashboard.root()).toBeVisible({ timeout: 20000 });
+  this.checklist.record('Admin authentication successful', username, true);
+});
 
 Then('I should be redirected to the admin login page', async function (this: CustomWorld) {
   const page = this.getPage();
   const loginPage = new LoginPage(page);
-  await expect(loginPage.root()).toBeVisible();
+  await expect(page).toHaveURL(/.*\/admin(\/login)?.*$/, { timeout: 15000 });
+  await expect(loginPage.root()).toBeVisible({ timeout: 15000 });
+  this.checklist.record('Redirect to login page verified', page.url(), true);
 });
 
 When('I submit the login form without entering credentials', async function (this: CustomWorld) {

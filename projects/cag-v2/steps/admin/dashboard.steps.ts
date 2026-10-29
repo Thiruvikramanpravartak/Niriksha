@@ -9,11 +9,6 @@ When('I attempt to access the admin dashboard URL directly without a session', a
   this.checklist.record('Direct protected dashboard navigation', target, true);
 });
 
-Then('I should be redirected to the admin login page', async function (this: CustomWorld) {
-  const page = this.getPage();
-  await expect(page).toHaveURL(/.*\/admin\/login.*/, { timeout: 15000 });
-  this.checklist.record('Redirect to login page verified', page.url(), true);
-});
 
 Then('the protected dashboard metrics or banners should not be rendered', async function (this: CustomWorld) {
   const page = this.getPage();
